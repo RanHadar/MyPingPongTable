@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">MyPingPongTable</string>
+    <string name="app_name">CS Ping Pong</string>
+    <string name="init_welcome_text">Welcome!</string>
+    <string name="welcome_text">Hi %s!</string>
+    <string name="join_button_init_text">Join!</string>
+    <string name="pick_turn_text">Pick Up Your Turn!</string>
+    <string name="vs_text">vs.</string>
+    <string name="date_button_text">%1$d / %2$d / %3$d</string>
+    <string name="date_button_init_text">Today</string>
+    <string name="join_message">Your turn was saved. Click again to cancel</string>
+    <string name="join_twice_message">You can\'t play against yourself ;)</string>
+    <string name="name_too_long_message">Sorry. Pick a nickname shorter than 10 characters</string>
 </resources>

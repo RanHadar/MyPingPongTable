@@ -1,18 +1,554 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/pingPongPlayerImg"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+        <LinearLayout
+            android:id="@+id/saved_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Games"
+                android:textSize="10sp"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FCFCFC"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/backgroundbot"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="12">
+
+        <RelativeLayout
+            android:id="@+id/slot_expansions_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:paddingBottom="10dp">
+
+
+            <com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout
+                android:id="@+id/slotButtonsLayout"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pickTurnTxt"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:dividerPadding="10dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                app:expansion_openOnlyOne="true">
+
+                <com.github.florent37.expansionpanel.ExpansionHeader
+                    android:id="@+id/slot_header_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
+                    android:elevation="3dp"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="10dp"
+                    app:expansion_headerIndicator="@id/headerIndicator1"
+                    app:expansion_layout="@id/expansionLayout1">
+
+                    <ImageView
+                        android:id="@+id/headerIndicator1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <TextView
+                        android:id="@+id/header_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary" />
+
+                    <ImageView
+                        android:id="@+id/racket_icon1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/lock" />
+
+
+                </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                <com.github.florent37.expansionpanel.ExpansionLayout
+                    android:id="@+id/expansionLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="10dp"
+
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/expansion_bg">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/join_button_left1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/center_expansion_text1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/vs_text"
+                            android:textSize="14sp"
+                            />
+
+                        <Button
+                            android:id="@+id/join_button_right1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+
+
+                    </RelativeLayout>
+
+                </com.github.florent37.expansionpanel.ExpansionLayout>
+
+
+                <com.github.florent37.expansionpanel.ExpansionHeader
+                    android:id="@+id/slot_header_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
+                    android:elevation="3dp"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="10dp"
+
+                    app:expansion_headerIndicator="@id/headerIndicator2"
+                    app:expansion_layout="@id/expansionLayout2">
+
+                    <ImageView
+                        android:id="@+id/headerIndicator2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <TextView
+                        android:id="@+id/header_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary" />
+
+
+
+                    <ImageView
+                        android:id="@+id/racket_icon2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/lock" />
+
+
+                </com.github.florent37.expansionpanel.ExpansionHeader>
+
+
+                <com.github.florent37.expansionpanel.ExpansionLayout
+                    android:id="@+id/expansionLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="10dp"
+
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/expansion_bg">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/join_button_left2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/center_expansion_text2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/vs_text"
+                            android:textSize="14sp"
+                            />
+
+                        <Button
+                            android:id="@+id/join_button_right2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+
+                            android:textSize="12sp"
+                            />
+                    </RelativeLayout>
+
+
+                </com.github.florent37.expansionpanel.ExpansionLayout>
+
+                <com.github.florent37.expansionpanel.ExpansionHeader
+                    android:id="@+id/slot_header_3"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="10dp"
+
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
+                    android:elevation="3dp"
+                    android:textSize="16sp"
+                    app:expansion_headerIndicator="@id/headerIndicator3"
+                    app:expansion_layout="@id/expansionLayout3">
+
+                    <ImageView
+                        android:id="@+id/headerIndicator3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <TextView
+                        android:id="@+id/header_text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary" />
+
+
+                    <ImageView
+                        android:id="@+id/racket_icon3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/lock" />
+
+                </com.github.florent37.expansionpanel.ExpansionHeader>
+
+
+                <com.github.florent37.expansionpanel.ExpansionLayout
+                    android:id="@+id/expansionLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="10dp"
+
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/expansion_bg">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/join_button_left3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/center_expansion_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/vs_text"
+                            android:textSize="14sp"
+                            />
+
+                        <Button
+                            android:id="@+id/join_button_right3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+                    </RelativeLayout>
+
+                </com.github.florent37.expansionpanel.ExpansionLayout>
+
+
+                <com.github.florent37.expansionpanel.ExpansionHeader
+                    android:id="@+id/slot_header_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
+                    android:elevation="3dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:textSize="16sp"
+                    app:expansion_headerIndicator="@id/headerIndicator4"
+                    app:expansion_layout="@id/expansionLayout4">
+
+                    <ImageView
+                        android:id="@+id/headerIndicator4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <TextView
+                        android:id="@+id/header_text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary" />
+
+
+                    <ImageView
+                        android:id="@+id/racket_icon4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/lock" />
+                </com.github.florent37.expansionpanel.ExpansionHeader>
+
+
+                <com.github.florent37.expansionpanel.ExpansionLayout
+                    android:id="@+id/expansionLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="10dp"
+
+                    android:background="@drawable/expansion_bg">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/join_button_left4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/center_expansion_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="32dp"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/vs_text"
+                            android:textSize="14sp"
+                            />
+
+                        <Button
+                            android:id="@+id/join_button_right4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="20dp"
+                            android:backgroundTint="@color/orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/roboto"
+                            android:text="@string/join_button_init_text"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            />
+                    </RelativeLayout>
+
+                </com.github.florent37.expansionpanel.ExpansionLayout>
+
+            </com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout>
+
+            <Button
+                android:id="@+id/dateButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="35dp"
+                android:background="@drawable/daysbtnimg"
+                android:backgroundTint="@color/primary_blue"
+                android:fontFamily="@font/roboto"
+                android:text="@string/date_button_init_text"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                />
+
+
+            <TextView
+                android:id="@+id/pickTurnTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/pick_turn_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                tools:ignore="RtlHardcoded" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <NumberPicker
+                android:id="@+id/hour_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/colorAccent"
+                android:theme="@style/AppTheme.Picker"
+
+                android:clickable="false"
+                android:descendantFocusability="blocksDescendants"
+                android:focusable="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

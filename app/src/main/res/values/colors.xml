@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#284186</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="apple">#CCFFCC</color>
+    <color name="button_gray">#C4C4C4</color>
+    <color name="orange">#F9AD91</color>
+    <color name="button_light_blue">#65A3EE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="game_full">#284186</color>
+    <color name="primary_blue">#3F51B5</color>
+    <color name="GREY">#A9A9A9</color>
+    <color name="dateorange">#ffd54e</color>
+    <color name="white_80">#ffffff</color>
+    <color name="whitey">#FFFCFCFC</color>
+
 </resources>
