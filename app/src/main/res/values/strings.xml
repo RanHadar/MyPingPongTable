@@ -3,7 +3,7 @@
     <string name="init_welcome_text">Welcome!</string>
     <string name="welcome_text">Hi %s!</string>
     <string name="join_button_init_text">Join!</string>
-    <string name="pick_turn_text">Pick Up Your Turn!</string>
+    <string name="pick_turn_text">Pick Your Turn!</string>
     <string name="vs_text">vs.</string>
     <string name="date_button_text">%1$d / %2$d / %3$d</string>
     <string name="date_button_init_text">Today</string>

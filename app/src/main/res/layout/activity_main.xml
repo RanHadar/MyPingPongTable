@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3F51B5"
     android:orientation="vertical"
     android:visibility="visible"
     tools:context=".MainActivity">
@@ -13,32 +14,47 @@
         android:layout_height="match_parent"
         android:layout_weight="3">
 
-        <ImageView
-            android:id="@+id/pingPongPlayerImg"
-            android:layout_width="147dp"
+
+        <TextView
+            android:id="@+id/welcomePlayerTxt"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            android:layout_below="@id/saved_layout"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="-79dp"
+            android:layout_marginBottom="13dp"
+            android:text="Hi, "
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:autoSizeMaxTextSize="30sp"
+            app:autoSizeMinTextSize="26sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
+
         <LinearLayout
             android:id="@+id/saved_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="175dp"
             android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
             android:orientation="vertical">
-
+            <Button
+                android:id="@+id/savedTurnBtn"
+                android:padding="5dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/two_racket_icon"
+                android:backgroundTint="@color/white"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Games"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-light"
                 android:textColor="#FCFCFC"
@@ -81,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     android:layout_marginHorizontal="10dp"
@@ -111,7 +128,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                       />
+                        android:src="@drawable/lock" />
 
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
@@ -123,7 +140,7 @@
 
                     android:layout_height="100dp"
                     android:layout_marginBottom="20dp"
-                   >
+                    android:background="@drawable/expansion_bg">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -170,6 +187,7 @@
                             />
 
 
+
                     </RelativeLayout>
 
                 </com.github.florent37.expansionpanel.ExpansionLayout>
@@ -180,6 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     android:layout_marginHorizontal="10dp"
@@ -213,7 +232,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                         />
+                        android:src="@drawable/lock" />
 
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
@@ -226,7 +245,7 @@
 
                     android:layout_height="100dp"
                     android:layout_marginBottom="20dp"
-                    >
+                    android:background="@drawable/expansion_bg">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -242,7 +261,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -267,7 +285,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
 
@@ -285,6 +302,7 @@
 
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     app:expansion_headerIndicator="@id/headerIndicator3"
@@ -315,7 +333,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                        />
+                        android:src="@drawable/lock" />
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
 
@@ -327,7 +345,7 @@
                     android:layout_marginHorizontal="10dp"
 
                     android:layout_marginBottom="20dp"
-                >
+                    android:background="@drawable/expansion_bg">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -343,7 +361,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -368,7 +385,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -383,6 +399,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
+                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:layout_marginHorizontal="10dp"
                     android:textSize="16sp"
@@ -414,7 +431,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                     />
+                        android:src="@drawable/lock" />
                 </com.github.florent37.expansionpanel.ExpansionHeader>
 
 
@@ -425,7 +442,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginHorizontal="10dp"
 
-                    >
+                    android:background="@drawable/expansion_bg">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -441,7 +458,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -484,12 +500,22 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="35dp"
-                android:backgroundTint="@color/primary_blue"
+                android:background="@drawable/daysbtnimg"
+                android:backgroundTint="@color/button_light_blue"
                 android:text="@string/date_button_init_text"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 />
 
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignBottom="@id/dateButton"
+                android:layout_marginStart="-40dp"
+                android:layout_toEndOf="@id/dateButton"
+                android:elevation="3dp"
+                android:outlineProvider="none"
+                android:src="@drawable/calendar" />
 
             <TextView
                 android:id="@+id/pickTurnTxt"
