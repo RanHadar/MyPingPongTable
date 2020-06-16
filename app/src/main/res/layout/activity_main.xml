@@ -52,7 +52,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/backgroundbot"
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:weightSum="12">
@@ -82,7 +81,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
-                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     android:layout_marginHorizontal="10dp"
@@ -104,7 +102,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/roboto"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary" />
 
@@ -114,7 +111,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/lock" />
+                       />
 
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
@@ -126,7 +123,7 @@
 
                     android:layout_height="100dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/expansion_bg">
+                   >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -143,7 +140,6 @@
                             android:clickable="true"
                             android:focusable="true"
 
-                            android:fontFamily="@font/roboto"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -155,7 +151,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/vs_text"
                             android:textSize="14sp"
                             />
@@ -169,7 +164,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -186,7 +180,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
-                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     android:layout_marginHorizontal="10dp"
@@ -209,7 +202,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/roboto"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary" />
 
@@ -221,7 +213,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/lock" />
+                         />
 
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
@@ -234,7 +226,7 @@
 
                     android:layout_height="100dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/expansion_bg">
+                    >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -250,7 +242,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
 
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
@@ -263,7 +254,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/vs_text"
                             android:textSize="14sp"
                             />
@@ -277,7 +267,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
 
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
@@ -296,7 +285,6 @@
 
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
-                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
                     app:expansion_headerIndicator="@id/headerIndicator3"
@@ -317,7 +305,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/roboto"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary" />
 
@@ -328,7 +315,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/lock" />
+                        />
 
                 </com.github.florent37.expansionpanel.ExpansionHeader>
 
@@ -340,7 +327,7 @@
                     android:layout_marginHorizontal="10dp"
 
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/expansion_bg">
+                >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -356,7 +343,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
 
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
@@ -369,7 +355,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/vs_text"
                             android:textSize="14sp"
                             />
@@ -383,7 +368,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
 
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
@@ -399,7 +383,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="-10dp"
-                    android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:layout_marginHorizontal="10dp"
                     android:textSize="16sp"
@@ -421,7 +404,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/roboto"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary" />
 
@@ -432,7 +414,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="left|center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/lock" />
+                     />
                 </com.github.florent37.expansionpanel.ExpansionHeader>
 
 
@@ -443,7 +425,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginHorizontal="10dp"
 
-                    android:background="@drawable/expansion_bg">
+                    >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -459,7 +441,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
 
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
@@ -472,7 +453,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="32dp"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/vs_text"
                             android:textSize="14sp"
                             />
@@ -487,7 +467,6 @@
                             android:backgroundTint="@color/orange"
                             android:clickable="true"
                             android:focusable="true"
-                            android:fontFamily="@font/roboto"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
                             android:textSize="12sp"
@@ -505,9 +484,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="35dp"
-                android:background="@drawable/daysbtnimg"
                 android:backgroundTint="@color/primary_blue"
-                android:fontFamily="@font/roboto"
                 android:text="@string/date_button_init_text"
                 android:textAlignment="center"
                 android:textColor="@color/white"
