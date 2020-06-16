@@ -58,20 +58,6 @@ public class Game implements java.io.Serializable{
     }
 
     /**
-     * Get the number of empty position in the game
-     * @return an integer representing available slots in the game
-     */
-    int empty_slots(){
-        if(this.isFull()){
-	String temp = "Date: "+this.getDate()+" Time: "+this.getTime() + " Player2: "+this.getPlayer2()
-                + " Player1: "+this.getPlayer1();
-
-        } else if(this.isEmpty()){
-            return 1;
-        } return 2;
-    }
-
-    /**
      * String representation of the object
      * @return a String representing the game
      */
@@ -81,29 +67,26 @@ public class Game implements java.io.Serializable{
                 " Player1: "+this.getPlayer1()+" Player2: "+this.getPlayer2();
     }
 
-	
-
-
-    /**
-     * 
-     * Changes the slot according to player p
+    /**  
+     * Method for adding a player to the game
+     * @param player - The name of the player to add 
+     * @return true if the player was added successfully, false if the player is already in the game
+     * or the game is already full
      */
-    void change_slot(String p){
-        if(p == null){
+    boolean addPlayer(String player){
+        if (player == null || player.equals(this.player1) || player.equals(this.player2)) {
             return false;
         }
-        else if(player.equals(this.player)){
-            player1 = null;
-        }
-        else
-	{
-            	player1 = null;
-    		player2 = null;
-        }
-        if(getPlayer1() != null || getPlayer2() == null){
-            	server.deleteGame(this);
-    		player1 = null;
-        }
+        if(this.player1 == null){
+            this.player1 = player;
+            if(this.player2 == null){
+                this.server.addGame(this);
+            }
+        } else if(this.player2 == null){
+            this.player2 = player;
+        } else return false;
+        return true;
+
     }
 
     /**
@@ -126,6 +109,7 @@ public class Game implements java.io.Serializable{
         }
         return true;
     }
+
 
 
 }
