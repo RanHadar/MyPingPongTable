@@ -133,5 +133,130 @@ class Server implements java.io.Serializable{
         return game_slots;
     }
 
+    /**
+     * Returns an ArrayList of Games of given date. The size of the ArrayList is the number of game
+     * slots that fit in one day, so if each game is 15 minutes, the returned ArrayList will be of
+     * size 4 * 24.
+     * @param date - an integer in the format DDMMYEAR or DMMYEAR,
+     *             ex. 20112019, 1012020
+     * @return an ArrayList of games of the given day
+     */
+    ArrayList<Game> getDayAgenda(int date){
+        ArrayList<Game> game_slots = new ArrayList<>();
+        for (int hour = 0; hour < HOURS_IN_DAY; hour++){
+            game_slots.addAll(getHourAgenda(date, hour * INTERVAL));
+        }
+        return game_slots;
+    }
 
+    /**
+     * Returns an ArrayList of Games of a given player.
+     * @param player the player name to get games of
+     * @return an ArrayList of games of all games where player plays
+     */
+    ArrayList<Game> getPlayerAgenda(String player){
+        ArrayList<Game> game_slots = new ArrayList<>();
+        if (player == null){
+            return game_slots;
+        }
+        for (Game g : game_list){
+            if(player.equals(g.getPlayer1()) || player.equals(g.getPlayer2())){
+                game_slots.add(g);
+            }
+        }
+        return game_slots;
+    }
+
+    /**
+     * Adds a game to the game_list of the server.
+     * @param game a Game object to add to the server
+     */
+    void addGame(Game game){
+        game_list.add(game);
+    }
+
+    /**
+     * NOTICE: you can also join directly to a game, you don't have to use this method.
+     * Adds a player to a game. If there is no game at the current date
+     * and time, creates a new game and adds the player to it
+     * @param date the date of the game in 8 digits, as in 22122019
+     * @param time the time of the game in 4 digits, as in 1215
+     * @param user the username
+     * @return whether the player was successfully added to the game
+     */
+    boolean addPlayer(int date, int time, String user){
+        for (Game g : game_list){
+            if(g.getDate() == date && g.getTime() == time){
+                return g.addPlayer(user);
+            }
+        } return game_list.add(new Game(this, date, time, user));
+    }
+
+    /**
+     * Removes a player from a game \
+     * @param date int representing the date of the game to modify
+     * @param time int representing the time of the game to modify
+     * @param user String representing the username to remove from the game
+     * @return true of the user was successfully removed from the game, false otherwise
+     */
+    boolean removePlayer(int date, int time, String user){
+        Game g = getGame(date, time);
+        if(g == null)
+            return false;
+        return g.removePlayer(user);
+    }
+
+    /**
+     * Removes a game from the games_list
+     * @param g a Game object to be removed from the server
+     * @return True iff the game was successfully removed from the games_list
+     */
+    boolean deleteGame(Game g){
+        return game_list.remove(g);
+    }
+
+    /**
+     * Gets a list of games in a given day
+     * @param date - an integer in the format DDMMYEAR or DMMYEAR,
+     *             ex. 20112019, 1012020
+     * @return a list of only NONEMPTY games in the given day, not sorted by time.
+     */
+    ArrayList<Game> getGamesByDate(int date){
+        ArrayList<Game> games_by_date = new ArrayList<>();
+        for (Game g : game_list){
+            if(g.getDate() == date){
+                games_by_date.add(g);
+            }
+        }
+        return games_by_date;
+    }
+
+    /**
+     * Saves the server state in a file, server_data.ser
+     */
+    void saveState(){
+        System.out.println(System.getProperty("user.dir")+"/server_data.ser");
+
+        try {
+            FileOutputStream fileOut =
+                    new FileOutputStream(System.getProperty("user.dir")+"/server_data.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+            System.out.println("!!!!!!!!!!!!!!");
+            System.out.println(System.getProperty("user.dir")+"/server_data.ser");
+
+        }
+    }
+
+    /**
+     * Resets the server. After calling this method, you should user getInstance again.
+     */
+    void reset(){
+        game_list = new ArrayList<>();
+        server = null;
+    }
 }
