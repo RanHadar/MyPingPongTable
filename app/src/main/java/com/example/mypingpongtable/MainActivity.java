@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-}
+
 
 
     private void connectViewsToXML() {
