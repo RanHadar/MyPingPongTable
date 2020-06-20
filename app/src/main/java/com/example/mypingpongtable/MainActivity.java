@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -87,5 +88,39 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         headerTexts[1] = findViewById(R.id.header_text2);
         headerTexts[2] = findViewById(R.id.header_text3);
         headerTexts[3] = findViewById(R.id.header_text4);
+    }
+
+    private void updateHeaderIcons() {
+        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
+        server.saveState();
+
+        for (int i = 0; i < 4; i++) {
+//            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+            switch (games.get(i).empty_slots()) {
+                case 0:
+                    if (games.get(i).getPlayer1().equals(username) || games.get(i).getPlayer2().equals(username)) {
+                        headerRacketIcons[i].setImageResource(R.drawable.game_full);
+                        headerRacketIcons[i].setVisibility(View.VISIBLE);
+                        headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+                    } else {
+                        headerRacketIcons[i].setImageResource(R.drawable.lock);
+                        headerRacketIcons[i].setVisibility(View.VISIBLE);
+                        headerTexts[i].setTextColor(getResources().getColor(R.color.GREY));
+                    }
+
+                    break;
+                case 1:
+                    headerRacketIcons[i].setVisibility(View.VISIBLE);
+                    headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    if (((games.get(i).getPlayer1() != null) && (games.get(i).getPlayer1().equals(username))
+                    ) || ((games.get(i).getPlayer2() != null) && (games.get(i).getPlayer2().equals(username)))) {
+                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                    } else {
+                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                    }
+                    break;
+            }
+        }
     }
 }

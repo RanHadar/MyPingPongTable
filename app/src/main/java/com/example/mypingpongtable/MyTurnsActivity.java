@@ -18,25 +18,6 @@ import java.util.ArrayList;
 
 public class MyTurnsActivity extends AppCompatActivity implements Serializable {
 
-    private TextView welcomePlayerTxt;
-    private Button returnBtn;
-    private String username;
-    private ArrayList<Game> gameList;
-    private ArrayList<Game> deletedGameList;
-    RecyclerView myTurnsRecyclerView;
-    private Button dateButton;
-//    MyTurnAdapter myTurnAdapter;
-
-
-    private NumberPicker hourPicker;
-
-    private ExpansionHeader[] slotHeaders = new ExpansionHeader[GAMES_PER_HOUR];
-    private ExpansionLayout[] slotExpansions = new ExpansionLayout[GAMES_PER_HOUR];
-    private TextView[] headerTexts = new TextView[GAMES_PER_HOUR];
-    private ImageView[] headerRacketIcons = new ImageView[GAMES_PER_HOUR];
-    private Button[] leftJoinButtons = new Button[GAMES_PER_HOUR];
-    private Button[] rightJoinButtons = new Button[GAMES_PER_HOUR];
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,53 +36,7 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private void updateHeaderIcons() {
-        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
-        server.saveState();
 
-        for (int i = 0; i < 4; i++) {
-//            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-            switch (games.get(i).empty_slots()) {
-                case 0:
-                    if (games.get(i).getPlayer1().equals(username) || games.get(i).getPlayer2().equals(username)) {
-                        headerRacketIcons[i].setImageResource(R.drawable.game_full);
-                        headerRacketIcons[i].setVisibility(View.VISIBLE);
-                        headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
-                    } else {
-                        headerRacketIcons[i].setImageResource(R.drawable.lock);
-                        headerRacketIcons[i].setVisibility(View.VISIBLE);
-                        headerTexts[i].setTextColor(getResources().getColor(R.color.GREY));
-                    }
 
-                    break;
-                case 1:
-                    headerRacketIcons[i].setVisibility(View.VISIBLE);
-                    headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    if (((games.get(i).getPlayer1() != null) && (games.get(i).getPlayer1().equals(username))
-                    ) || ((games.get(i).getPlayer2() != null) && (games.get(i).getPlayer2().equals(username)))) {
-                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
-                    } else {
-                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
-                    }
-                    break;
-            }
-        }
-    }
-
-    private void connectViewsToXML() {
-        hourPicker = findViewById(R.id.hour_picker);
-
-        dateButton = findViewById(R.id.dateButton);
-
-//        myTurnsBtn = findViewById(R.id.savedTurnBtn);
-
-        welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
-
-        slotExpansions[0] = findViewById(R.id.expansionLayout1);
-        slotExpansions[1] = findViewById(R.id.expansionLayout2);
-        slotExpansions[2] = findViewById(R.id.expansionLayout3);
-        slotExpansions[3] = findViewById(R.id.expansionLayout4);
-    }
 
 }
