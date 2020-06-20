@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,11 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
     private ArrayList<Game> gameList;
     private ArrayList<Game> deletedGameList;
     RecyclerView myTurnsRecyclerView;
+    private Button dateButton;
 //    MyTurnAdapter myTurnAdapter;
+
+
+    private NumberPicker hourPicker;
 
     private ExpansionHeader[] slotHeaders = new ExpansionHeader[GAMES_PER_HOUR];
     private ExpansionLayout[] slotExpansions = new ExpansionLayout[GAMES_PER_HOUR];
@@ -82,6 +87,21 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
                     break;
             }
         }
+    }
+
+    private void connectViewsToXML() {
+        hourPicker = findViewById(R.id.hour_picker);
+
+        dateButton = findViewById(R.id.dateButton);
+
+//        myTurnsBtn = findViewById(R.id.savedTurnBtn);
+
+        welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
+
+        slotExpansions[0] = findViewById(R.id.expansionLayout1);
+        slotExpansions[1] = findViewById(R.id.expansionLayout2);
+        slotExpansions[2] = findViewById(R.id.expansionLayout3);
+        slotExpansions[3] = findViewById(R.id.expansionLayout4);
     }
 
 }
