@@ -192,65 +192,7 @@ class Server implements java.io.Serializable{
         } return game_list.add(new Game(this, date, time, user));
     }
 
-    /**
-     * Removes a player from a game \
-     * @param date int representing the date of the game to modify
-     * @param time int representing the time of the game to modify
-     * @param user String representing the username to remove from the game
-     * @return true of the user was successfully removed from the game, false otherwise
-     */
-    boolean removePlayer(int date, int time, String user){
-        Game g = getGame(date, time);
-        if(g == null)
-            return false;
-        return g.removePlayer(user);
-    }
 
-    /**
-     * Removes a game from the games_list
-     * @param g a Game object to be removed from the server
-     * @return True iff the game was successfully removed from the games_list
-     */
-    boolean deleteGame(Game g){
-        return game_list.remove(g);
-    }
-
-    /**
-     * Gets a list of games in a given day
-     * @param date - an integer in the format DDMMYEAR or DMMYEAR,
-     *             ex. 20112019, 1012020
-     * @return a list of only NONEMPTY games in the given day, not sorted by time.
-     */
-    ArrayList<Game> getGamesByDate(int date){
-        ArrayList<Game> games_by_date = new ArrayList<>();
-        for (Game g : game_list){
-            if(g.getDate() == date){
-                games_by_date.add(g);
-            }
-        }
-        return games_by_date;
-    }
-
-    /**
-     * Saves the server state in a file, server_data.ser
-     */
-    void saveState(){
-        System.out.println(System.getProperty("user.dir")+"/server_data.ser");
-
-        try {
-            FileOutputStream fileOut =
-                    new FileOutputStream(System.getProperty("user.dir")+"/server_data.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-            System.out.println("!!!!!!!!!!!!!!");
-            System.out.println(System.getProperty("user.dir")+"/server_data.ser");
-
-        }
-    }
 
     /**
      * Resets the server. After calling this method, you should user getInstance again.
