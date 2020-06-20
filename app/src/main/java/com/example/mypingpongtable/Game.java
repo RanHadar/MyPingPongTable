@@ -1,6 +1,8 @@
 package com.example.mypingpongtable;
 
 
+import com.example.mypingpongtable.Server;
+
 public class Game implements java.io.Serializable{
     private Server server;
     private int date;
@@ -110,6 +112,29 @@ public class Game implements java.io.Serializable{
         return true;
     }
 
+    /**
+     * Sets the server associated with the game
+     * @param server the server object to associate the game with
+     */
+    void setServer(Server server){
+        this.server = server;
+    }
+
+    String getTimeString() {
+        int hour, offset;
+        hour = time / Server.INTERVAL;
+        offset = time - hour * Server.INTERVAL;
+        return hour + ":" + (offset == 0 ? "00" : offset);
+    }
+
+    String getDateString() {
+        int day, month, year;
+        day = date / 1000000;
+        month = (date - day * 1000000) / 10000;
+        year = date % 10000;
+
+        return day + "/" + month + "/" + year;
+    }
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.cspingpong;
+package com.example.mypingpongtable;
 
 import android.os.Parcelable;
 
