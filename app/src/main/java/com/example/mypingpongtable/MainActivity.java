@@ -50,9 +50,193 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        server = Server.getInstance();
+
+        connectViewsToXML();
+        setHourPickerValues();
+        setHourPickerListener();
+        setDefaultDateAndTime();
+        fabricateGames(selectedDate);
+
+        updateHeaders();
+
+        loadSavedUsername();
+
+        if (username == null) {
+            launchNameDialog();
+        } else {
+            updateExpansions();
+            welcomePlayerTxt.setText(getString(R.string.welcome_text, username));
+        }
+
+        makeSlideGesture();
+
+        deletedGames = new ArrayList<Game>();
+    }
+    }
+    private void loadSavedUsername() {}
+    private void setHourPickerValues() {}
+
+    private void startAnimationDown(ObjectAnimator flipAnimator) {
+        hourPicker.setValue(hourPicker.getValue() - 1);
+        selectedHour = selectedHour - 100;
+        if (selectedHour < -1) {
+            selectedHour = 2300;
+        }
+        for (int i = 0; i < 4; i++) {
+            slotExpansions[i].collapse(true);
+            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
+            flipAnimator.setTarget(slotHeaders[i]);
+            flipAnimator.setStartDelay(i * 100);
+            final int finalI = i;
+            flipAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    updateHeaders(finalI);
+
+                }
+            });
+            flipAnimator.start();
+        }
     }
 
 
+    private void startAnimationUp(int headerIndex, ObjectAnimator flipAnimator, int delayMultiplier) {
+
+        flipAnimator.setTarget(slotHeaders[headerIndex]);
+        switch (headerIndex) {
+            case 0:
+                flipAnimator.setStartDelay(60 * delayMultiplier);
+                break;
+            case 1:
+                flipAnimator.setStartDelay(40 * delayMultiplier);
+                break;
+            case 2:
+                flipAnimator.setStartDelay(20 * delayMultiplier);
+                break;
+            case 3:
+                flipAnimator.setStartDelay(0);
+                break;
+        }
+        final int finalI = headerIndex;
+        flipAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                updateHeaders(finalI);
+
+            }
+        });
+        flipAnimator.start();
+    }
+
+
+    private void updateHeaders() {
+        updateHeaderIcons();
+        updateHeaderTimes();
+    }
+
+    private void updateHeaders(int i) {
+        updateHeaderIcons(i);
+        updateHeaderTimes(i);
+    }
+
+    private void launchNameDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        nameDialog = NameDialog.newInstance("Welcome!");
+        nameDialog.show(fm, "fragment_edit_name");
+    }
+
+    /**
+     * set time picker default value to current time
+     */
+    private void setDefaultDateAndTime() {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datetime = dateFormat.format(date.getTime());
+
+        selectedDate = Integer.parseInt(datetime);
+        hourPicker.setValue(calendar.get(Calendar.HOUR_OF_DAY));
+        selectedHour = hourPicker.getValue() * Server.INTERVAL;
+
+
+        // fixes default hour being invisibleArrayList<MyClass> list = (ArrayList<MyClass>)getIntent().getExtras()getSerializable("myClassList");
+        View firstItem = hourPicker.getChildAt(0);
+        if (firstItem != null) {
+            firstItem.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void selectDate(View button) {
+
+        Builder builder = new Builder(MainActivity.this, new Builder.CalendarPickerOnConfirm() {
+            @Override
+            public void onComplete(YearMonthDay date) {
+
+                dateButton.setText(
+                        getString(R.string.date_button_text, date.day, date.month, date.year));
+                selectedDate = date.year + date.month * 10000 + date.day * 1000000;
+
+                updateHeaderIcons();
+                updateExpansions();
+            }
+        })
+                // design
+                .setPromptText("Select a day to play !")
+                .setMonthBaseBgColor(0xF2FCFCFC)
+                .setSelectedColor(0xFF284186)
+                .setSelectedText("")
+                .setConfirmBgColor(0xFF284186)
+                .setConfirmColor(0xFFFCFCFC)
+                .setSelectedBgColor(0xFFFFFFFF);
+
+        builder.show();
+    }
+
+    /**
+     * time picker on value changed listener
+     */
+    private void setHourPickerListener() {
+
+        hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//               for (ExpansionLayout e : slotExpansions) {
+//                    e.collapse(true);
+//               }
+                valueChangeAnimate(oldVal, newVal);
+                selectedHour = newVal * Server.INTERVAL;
+                updateHeaders();
+                updateExpansions();
+            }
+        });
+    }
+
+    private void updateHeaderTimes() {
+
+        String[] headerTimes = getResources().getStringArray(R.array.header_times);
+
+        for (int i = 0; i < GAMES_PER_HOUR; i++) {
+            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
+            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+        }
+    }
+
+    private void updateHeaderTimes(int i) {
+
+        String[] headerTimes = getResources().getStringArray(R.array.header_times);
+        headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
+        headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+
+    }
+
+
+    /**
+     * Connect between Objects and XML representation of them
+     */
     private void connectViewsToXML() {
         hourPicker = findViewById(R.id.hour_picker);
 
