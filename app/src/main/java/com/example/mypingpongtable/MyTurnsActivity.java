@@ -3,6 +3,7 @@ package com.example.mypingpongtable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +52,11 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
 
     public void removeGame(int position)
     {
-
+        myTurnAdapter.removeGame(position);
+        Game game = gameList.get(position);
+        deletedGameList.add(game);
+        gameList.remove(position);
+        Toast.makeText(getApplicationContext(),"Turn: "+game.getDate() +" at "+ game.getTime() +" was deleted",Toast.LENGTH_SHORT).show();
 
     }
 
