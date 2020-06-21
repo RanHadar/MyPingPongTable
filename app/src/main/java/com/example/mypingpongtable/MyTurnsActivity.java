@@ -1,5 +1,6 @@
 package com.example.mypingpongtable;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -58,6 +59,17 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         gameList.remove(position);
         Toast.makeText(getApplicationContext(),"Turn: "+game.getDate() +" at "+ game.getTime() +" was deleted",Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent backIntent = new Intent();
+        backIntent.putExtra("deletedGames", this.deletedGameList);
+        setResult(RESULT_OK, backIntent);
+
+        finish();
+        overridePendingTransition(0, android.R.anim.fade_out);
     }
 
 
