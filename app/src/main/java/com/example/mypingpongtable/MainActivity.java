@@ -1,7 +1,6 @@
 package com.example.mypingpongtable;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,21 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-
 import com.github.florent37.expansionpanel.ExpansionHeader;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout;
-import com.maxproj.calendarpicker.Builder;
-import com.maxproj.calendarpicker.Models.YearMonthDay;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import pl.droidsonroids.gif.GifImageView;
-
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
@@ -34,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     private int selectedDate;
     private int selectedHour;
-//    private Server server;
+    private Server server;
     private String username;
     private ArrayList<Game> deletedGames;
     private NumberPicker hourPicker;
@@ -62,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
 
     private void connectViewsToXML() {
