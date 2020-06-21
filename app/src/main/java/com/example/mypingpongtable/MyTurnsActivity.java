@@ -2,11 +2,13 @@ package com.example.mypingpongtable;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
@@ -25,7 +27,32 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_turns);
+        myTurnsRecyclerView = findViewById(R.id.recyclerViewTurns);
+        myTurnsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
+        returnBtn = findViewById(R.id.returnBtn);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        Intent incomingIntent = getIntent();
+        username = incomingIntent.getStringExtra("username");
+        gameList = (ArrayList<Game>) getIntent().getExtras().getSerializable("game_list");
 
+        welcomePlayerTxt.setText("My Turns:");
+        myTurnAdapter = new MyTurnAdapter(this, getMyList());
+        myTurnsRecyclerView.setAdapter(myTurnAdapter);
+        myTurnAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onDeleteClick(View v, int position) {
+                removeGame(position);
+            }
+        });
+
+        deletedGameList = new ArrayList<Game>();
     }
 
     private ArrayList<MyTurnSlot> getMyList() {
@@ -71,6 +98,4 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         finish();
         overridePendingTransition(0, android.R.anim.fade_out);
     }
-
-
 }
