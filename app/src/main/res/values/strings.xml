@@ -3,11 +3,46 @@
     <string name="init_welcome_text">Welcome!</string>
     <string name="welcome_text">Hi %s!</string>
     <string name="join_button_init_text">Join!</string>
-    <string name="pick_turn_text">Pick Your Turn!</string>
+    <string name="pick_turn_text">Pick Up Your Turn!</string>
     <string name="vs_text">vs.</string>
     <string name="date_button_text">%1$d / %2$d / %3$d</string>
     <string name="date_button_init_text">Today</string>
     <string name="join_message">Your turn was saved. Click again to cancel</string>
     <string name="join_twice_message">You can\'t play against yourself ;)</string>
     <string name="name_too_long_message">Sorry. Pick a nickname shorter than 10 characters</string>
+    <string name="username">username</string>
+    <string name="copyright">Animation by Feitosa in Motion</string>
+    <string-array name="header_times">
+        <item>%d:00</item>
+        <item>%d:15</item>
+        <item>%d:30</item>
+        <item>%d:45</item>
+    </string-array>
+
+    <string-array name="hour_picker_strings">
+        <item>00:00</item>
+        <item>01:00</item>
+        <item>02:00</item>
+        <item>03:00</item>
+        <item>04:00</item>
+        <item>05:00</item>
+        <item>06:00</item>
+        <item>07:00</item>
+        <item>08:00</item>
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+        <item>15:00</item>
+        <item>16:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+        <item>19:00</item>
+        <item>20:00</item>
+        <item>21:00</item>
+        <item>22:00</item>
+        <item>23:00</item>
+    </string-array>
 </resources>

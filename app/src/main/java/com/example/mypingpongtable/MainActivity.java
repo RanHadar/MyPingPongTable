@@ -89,12 +89,13 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         if (username == null) {
             launchNameDialog();
         } else {
-            updateExpansions();
+//            updateExpansions();
             welcomePlayerTxt.setText(getString(R.string.welcome_text, username));
         }
 
-        makeSlideGesture();
-
+//        makeSlideGesture();
+        fabricateGames(selectedDate);
+//        slideGestureMaker();
         deletedGames = new ArrayList<Game>();
     }
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 }
             }
             updateHeaders();
-            updateExpansions();
+//            updateExpansions();
         }
     }
 
@@ -129,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private void valueChangeAnimate(int oldVal, int newVal) {}
+    private void valueChangeAnimate(int oldVal, int newVal) {} //todo - need to create
 
     @SuppressLint("ClickableViewAccessibility")
-    private void slideGestureMaker(){}
+    private void slideGestureMaker(){} //todo - need to create
 
 
     private void updateHeaders() {
@@ -185,9 +186,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 selectedDate = date.year + date.month * 10000 + date.day * 1000000;
 
                 updateHeaderIcons();
-                updateExpansions();
+//                updateExpansions();
             }
         })
+                // todo - we should think about cutting this to another inner method
                 // design
                 .setPromptText("Select a day to play !")
                 .setMonthBaseBgColor(0xF2FCFCFC)
@@ -200,7 +202,103 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         builder.show();
     }
 
-    private void setHourPickerValues() {}
+
+
+    private void updateHeaderTimes() {
+
+        String[] headerTimes = getResources().getStringArray(R.array.header_times);
+
+        for (int i = 0; i < GAMES_PER_HOUR; i++) {
+            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
+            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+        }
+    }
+
+    private void updateHeaderTimes(int i) {
+
+        String[] headerTimes = getResources().getStringArray(R.array.header_times);
+        headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
+        headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+
+    }
+    /**
+     * Connect between Objects and XML representation of them
+     */
+    private void connectViewsToXML() {
+
+        //todo - should seperate to 3 inner methods
+        hourPicker = findViewById(R.id.hour_picker);
+        dateButton = findViewById(R.id.dateButton);
+
+//        myTurnsBtn = findViewById(R.id.savedTurnBtn);
+
+        welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
+        slotExpansions[0] = findViewById(R.id.expansionLayout1);
+        slotExpansions[1] = findViewById(R.id.expansionLayout2);
+        slotExpansions[2] = findViewById(R.id.expansionLayout3);
+        slotExpansions[3] = findViewById(R.id.expansionLayout4);
+        slotHeaders[0] = findViewById(R.id.slot_header_1);
+        slotHeaders[1] = findViewById(R.id.slot_header_2);
+        slotHeaders[2] = findViewById(R.id.slot_header_3);
+        slotHeaders[3] = findViewById(R.id.slot_header_4);
+        headerTexts[0] = findViewById(R.id.header_text1);
+        headerTexts[1] = findViewById(R.id.header_text2);
+        headerTexts[2] = findViewById(R.id.header_text3);
+        headerTexts[3] = findViewById(R.id.header_text4);
+        headerRacketIcons[0] = findViewById(R.id.racket_icon1);
+        headerRacketIcons[1] = findViewById(R.id.racket_icon2);
+        headerRacketIcons[2] = findViewById(R.id.racket_icon3);
+        headerRacketIcons[3] = findViewById(R.id.racket_icon4);
+        leftJoinButtons[0] = findViewById(R.id.join_button_left1);
+        leftJoinButtons[1] = findViewById(R.id.join_button_left2);
+        leftJoinButtons[2] = findViewById(R.id.join_button_left3);
+        leftJoinButtons[3] = findViewById(R.id.join_button_left4);
+        rightJoinButtons[0] = findViewById(R.id.join_button_right1);
+        rightJoinButtons[1] = findViewById(R.id.join_button_right2);
+        rightJoinButtons[2] = findViewById(R.id.join_button_right3);
+        rightJoinButtons[3] = findViewById(R.id.join_button_right4);
+        linearLayout = findViewById(R.id.slotButtonsLayout);
+    }
+
+    private void updateHeaderIcons() {
+        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
+        server.saveState();
+
+        for (int i = 0; i < 4; i++) {
+//            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+            switch (games.get(i).empty_slots()) {
+                case 0:
+                    if (games.get(i).getPlayer1().equals(username) || games.get(i).getPlayer2().equals(username)) {
+                        headerRacketIcons[i].setImageResource(R.drawable.game_full);
+                        headerRacketIcons[i].setVisibility(View.VISIBLE);
+                        headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+                    } else {
+                        headerRacketIcons[i].setImageResource(R.drawable.lock);
+                        headerRacketIcons[i].setVisibility(View.VISIBLE);
+                        headerTexts[i].setTextColor(getResources().getColor(R.color.GREY));
+                    }
+
+                    break;
+                case 1:
+                    headerRacketIcons[i].setVisibility(View.VISIBLE);
+                    headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    if (((games.get(i).getPlayer1() != null) && (games.get(i).getPlayer1().equals(username))
+                    ) || ((games.get(i).getPlayer2() != null) && (games.get(i).getPlayer2().equals(username)))) {
+                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                    } else {
+                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void updateHeaderIcons(int i){} //todo - need to create the same method with int arg
+
+    private void setHourPickerValues() {} //todo - need to create this
+
+    private int timeOffset(int buttonId){} // todo - create timeOffset method
 
     private void startAnimationDown(ObjectAnimator flipAnimator) {
         hourPicker.setValue(hourPicker.getValue() - 1);
@@ -271,108 +369,27 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 valueChangeAnimate(oldVal, newVal);
                 selectedHour = newVal * Server.INTERVAL;
                 updateHeaders();
-                updateExpansions();
+//                updateExpansions();
             }
         });
     }
 
-    private void updateHeaderTimes() {
-
-        String[] headerTimes = getResources().getStringArray(R.array.header_times);
-
-        for (int i = 0; i < GAMES_PER_HOUR; i++) {
-            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
-            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-        }
-    }
-
-    private void updateHeaderTimes(int i) {
-
-        String[] headerTimes = getResources().getStringArray(R.array.header_times);
-        headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
-        headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-
-    }
-
-
-    /**
-     * Connect between Objects and XML representation of them
-     */
-    private void connectViewsToXML() {
-        hourPicker = findViewById(R.id.hour_picker);
-
-        dateButton = findViewById(R.id.dateButton);
-
-//        myTurnsBtn = findViewById(R.id.savedTurnBtn);
-
-        welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
-
-        slotExpansions[0] = findViewById(R.id.expansionLayout1);
-        slotExpansions[1] = findViewById(R.id.expansionLayout2);
-        slotExpansions[2] = findViewById(R.id.expansionLayout3);
-        slotExpansions[3] = findViewById(R.id.expansionLayout4);
-
-        slotHeaders[0] = findViewById(R.id.slot_header_1);
-        slotHeaders[1] = findViewById(R.id.slot_header_2);
-        slotHeaders[2] = findViewById(R.id.slot_header_3);
-        slotHeaders[3] = findViewById(R.id.slot_header_4);
-
-        headerTexts[0] = findViewById(R.id.header_text1);
-        headerTexts[1] = findViewById(R.id.header_text2);
-        headerTexts[2] = findViewById(R.id.header_text3);
-        headerTexts[3] = findViewById(R.id.header_text4);
-
-        headerRacketIcons[0] = findViewById(R.id.racket_icon1);
-        headerRacketIcons[1] = findViewById(R.id.racket_icon2);
-        headerRacketIcons[2] = findViewById(R.id.racket_icon3);
-        headerRacketIcons[3] = findViewById(R.id.racket_icon4);
-
-        leftJoinButtons[0] = findViewById(R.id.join_button_left1);
-        leftJoinButtons[1] = findViewById(R.id.join_button_left2);
-        leftJoinButtons[2] = findViewById(R.id.join_button_left3);
-        leftJoinButtons[3] = findViewById(R.id.join_button_left4);
-
-        rightJoinButtons[0] = findViewById(R.id.join_button_right1);
-        rightJoinButtons[1] = findViewById(R.id.join_button_right2);
-        rightJoinButtons[2] = findViewById(R.id.join_button_right3);
-        rightJoinButtons[3] = findViewById(R.id.join_button_right4);
-
-        linearLayout = findViewById(R.id.slotButtonsLayout);
-    }
-
-    private void updateHeaderIcons() {
-        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
-        server.saveState();
-
-        for (int i = 0; i < 4; i++) {
-//            headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-            switch (games.get(i).empty_slots()) {
-                case 0:
-                    if (games.get(i).getPlayer1().equals(username) || games.get(i).getPlayer2().equals(username)) {
-                        headerRacketIcons[i].setImageResource(R.drawable.game_full);
-                        headerRacketIcons[i].setVisibility(View.VISIBLE);
-                        headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
-                    } else {
-                        headerRacketIcons[i].setImageResource(R.drawable.lock);
-                        headerRacketIcons[i].setVisibility(View.VISIBLE);
-                        headerTexts[i].setTextColor(getResources().getColor(R.color.GREY));
-                    }
-
-                    break;
-                case 1:
-                    headerRacketIcons[i].setVisibility(View.VISIBLE);
-                    headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    if (((games.get(i).getPlayer1() != null) && (games.get(i).getPlayer1().equals(username))
-                    ) || ((games.get(i).getPlayer2() != null) && (games.get(i).getPlayer2().equals(username)))) {
-                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
-                    } else {
-                        headerRacketIcons[i].setImageResource(R.drawable.half_open);
-                    }
-                    break;
-            }
-        }
-    }
 
     private void loadSavedUsername() {}
+
+
+    void fabricateGames(int date) {
+        server.addPlayer(date, 1200, "Ran");
+        server.addPlayer(date, 1200, "Ruti");
+        server.addPlayer(date, 1215, "Or");
+        server.addPlayer(date, 1230, "Roey");
+        server.addPlayer(date, 1300, "Rom");
+        server.addPlayer(date, 1500, "Ran");
+        server.addPlayer(date, 1515, "Ruti");
+        server.addPlayer(date, 1515, "Or");
+        server.addPlayer(date, 1645, "Roey");
+        server.addPlayer(date, 1645, "Rom");
+        server.addPlayer(date, 1615, "Ran");
+        server.addPlayer(date, 1400, "Ruti");
+    }
 }
