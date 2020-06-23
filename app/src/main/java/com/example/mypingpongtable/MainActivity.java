@@ -296,7 +296,62 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     private void updateHeaderIcons(int i){} //todo - need to create the same method with int arg
 
-    private void setHourPickerValues() {} //todo - need to create this
+
+
+    private void setHourPickerValues() {
+
+        hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//               for (ExpansionLayout e : slotExpansions) {
+//                    e.collapse(true);
+//               }
+                valueChangeAnimate(oldVal, newVal);
+                selectedHour = newVal * Server.INTERVAL;
+                updateHeaders();
+                updateExpansions();
+            }
+        });
+
+
+    }
+    public void updateExpansions() {
+        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
+
+        for (int i = 0; i < GAMES_PER_HOUR; i++) {
+
+            updateJoinButton(leftJoinButtons[i], games.get(i).getPlayer1());
+
+            updateJoinButton(rightJoinButtons[i], games.get(i).getPlayer2());
+        }
+    }
+
+
+    private void updateJoinButton(Button joinButton, String playerName) {
+        Drawable bg = joinButton.getBackground();
+        bg = DrawableCompat.wrap(bg);
+
+        if (playerName == null) {
+            joinButton.setText(R.string.join_button_init_text);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Green));
+            joinButton.setClickable(true);
+
+        } else if (username.equals(playerName)) {
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
+            joinButton.setText(playerName);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            joinButton.setClickable(true);
+
+        } else {
+            DrawableCompat.setTint(bg, Color.TRANSPARENT);
+            joinButton.setText(playerName);
+            joinButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+            joinButton.setClickable(false);
+
+        }
+    }
+
 
     private int timeOffset(int buttonId){
         return 0;
