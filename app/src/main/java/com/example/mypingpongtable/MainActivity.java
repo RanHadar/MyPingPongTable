@@ -1,18 +1,42 @@
 package com.example.mypingpongtable;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentManager;
+
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Button;
+
 import com.github.florent37.expansionpanel.ExpansionHeader;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout;
+import com.maxproj.calendarpicker.Builder;
+import com.maxproj.calendarpicker.Models.YearMonthDay;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
@@ -28,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private ArrayList<Game> deletedGames;
     private NumberPicker hourPicker;
     private TextView welcomePlayerTxt;
-//    private NameDialog nameDialog;
+    private NameDialog nameDialog;
     private Button dateButton;
-//    private Button myTurnsBtn;
+    private Button myTurnsBtn;
 
     float x1, x2;
 
