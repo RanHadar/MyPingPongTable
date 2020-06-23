@@ -129,7 +129,77 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private void loadSavedUsername() {}
+    private void valueChangeAnimate(int oldVal, int newVal) {}
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void slideGestureMaker(){}
+
+
+    private void updateHeaders() {
+        updateHeaderIcons();
+        updateHeaderTimes();
+    }
+
+    private void updateHeaders(int i) {
+        updateHeaderIcons(i);
+        updateHeaderTimes(i);
+    }
+
+    private void launchNameDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        nameDialog = NameDialog.newInstance("Welcome!");
+        nameDialog.show(fm, "fragment_edit_name");
+    }
+
+
+    /**
+     * set time picker default value to current time
+     */
+    private void setDefaultDateAndTime() {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datetime = dateFormat.format(date.getTime());
+
+        selectedDate = Integer.parseInt(datetime);
+        hourPicker.setValue(calendar.get(Calendar.HOUR_OF_DAY));
+        selectedHour = hourPicker.getValue() * Server.INTERVAL;
+
+
+        // fixes default hour being invisibleArrayList<MyClass> list = (ArrayList<MyClass>)getIntent().getExtras()getSerializable("myClassList");
+        View firstItem = hourPicker.getChildAt(0);
+        if (firstItem != null) {
+            firstItem.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void selectDate(View button) {
+
+        Builder builder = new Builder(MainActivity.this, new Builder.CalendarPickerOnConfirm() {
+            @Override
+            public void onComplete(YearMonthDay date) {
+
+                dateButton.setText(
+                        getString(R.string.date_button_text, date.day, date.month, date.year));
+                selectedDate = date.year + date.month * 10000 + date.day * 1000000;
+
+                updateHeaderIcons();
+                updateExpansions();
+            }
+        })
+                // design
+                .setPromptText("Select a day to play !")
+                .setMonthBaseBgColor(0xF2FCFCFC)
+                .setSelectedColor(0xFF284186)
+                .setSelectedText("")
+                .setConfirmBgColor(0xFF284186)
+                .setConfirmColor(0xFFFCFCFC)
+                .setSelectedBgColor(0xFFFFFFFF);
+
+        builder.show();
+    }
+
     private void setHourPickerValues() {}
 
     private void startAnimationDown(ObjectAnimator flipAnimator) {
@@ -186,70 +256,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         flipAnimator.start();
     }
 
-
-    private void updateHeaders() {
-        updateHeaderIcons();
-        updateHeaderTimes();
-    }
-
-    private void updateHeaders(int i) {
-        updateHeaderIcons(i);
-        updateHeaderTimes(i);
-    }
-
-    private void launchNameDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        nameDialog = NameDialog.newInstance("Welcome!");
-        nameDialog.show(fm, "fragment_edit_name");
-    }
-
-    /**
-     * set time picker default value to current time
-     */
-    private void setDefaultDateAndTime() {
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-        String datetime = dateFormat.format(date.getTime());
-
-        selectedDate = Integer.parseInt(datetime);
-        hourPicker.setValue(calendar.get(Calendar.HOUR_OF_DAY));
-        selectedHour = hourPicker.getValue() * Server.INTERVAL;
-
-
-        // fixes default hour being invisibleArrayList<MyClass> list = (ArrayList<MyClass>)getIntent().getExtras()getSerializable("myClassList");
-        View firstItem = hourPicker.getChildAt(0);
-        if (firstItem != null) {
-            firstItem.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    public void selectDate(View button) {
-
-        Builder builder = new Builder(MainActivity.this, new Builder.CalendarPickerOnConfirm() {
-            @Override
-            public void onComplete(YearMonthDay date) {
-
-                dateButton.setText(
-                        getString(R.string.date_button_text, date.day, date.month, date.year));
-                selectedDate = date.year + date.month * 10000 + date.day * 1000000;
-
-                updateHeaderIcons();
-                updateExpansions();
-            }
-        })
-                // design
-                .setPromptText("Select a day to play !")
-                .setMonthBaseBgColor(0xF2FCFCFC)
-                .setSelectedColor(0xFF284186)
-                .setSelectedText("")
-                .setConfirmBgColor(0xFF284186)
-                .setConfirmColor(0xFFFCFCFC)
-                .setSelectedBgColor(0xFFFFFFFF);
-
-        builder.show();
-    }
 
     /**
      * time picker on value changed listener
@@ -315,6 +321,23 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         headerTexts[1] = findViewById(R.id.header_text2);
         headerTexts[2] = findViewById(R.id.header_text3);
         headerTexts[3] = findViewById(R.id.header_text4);
+
+        headerRacketIcons[0] = findViewById(R.id.racket_icon1);
+        headerRacketIcons[1] = findViewById(R.id.racket_icon2);
+        headerRacketIcons[2] = findViewById(R.id.racket_icon3);
+        headerRacketIcons[3] = findViewById(R.id.racket_icon4);
+
+        leftJoinButtons[0] = findViewById(R.id.join_button_left1);
+        leftJoinButtons[1] = findViewById(R.id.join_button_left2);
+        leftJoinButtons[2] = findViewById(R.id.join_button_left3);
+        leftJoinButtons[3] = findViewById(R.id.join_button_left4);
+
+        rightJoinButtons[0] = findViewById(R.id.join_button_right1);
+        rightJoinButtons[1] = findViewById(R.id.join_button_right2);
+        rightJoinButtons[2] = findViewById(R.id.join_button_right3);
+        rightJoinButtons[3] = findViewById(R.id.join_button_right4);
+
+        linearLayout = findViewById(R.id.slotButtonsLayout);
     }
 
     private void updateHeaderIcons() {
@@ -350,4 +373,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         }
     }
+
+    private void loadSavedUsername() {}
 }
