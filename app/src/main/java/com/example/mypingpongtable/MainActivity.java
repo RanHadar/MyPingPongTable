@@ -1,18 +1,42 @@
 package com.example.mypingpongtable;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentManager;
+
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Button;
+
 import com.github.florent37.expansionpanel.ExpansionHeader;
 import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout;
+import com.maxproj.calendarpicker.Builder;
+import com.maxproj.calendarpicker.Models.YearMonthDay;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
@@ -28,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private ArrayList<Game> deletedGames;
     private NumberPicker hourPicker;
     private TextView welcomePlayerTxt;
-//    private NameDialog nameDialog;
+    private NameDialog nameDialog;
     private Button dateButton;
-//    private Button myTurnsBtn;
+    private Button myTurnsBtn;
 
     float x1, x2;
 
@@ -65,71 +89,51 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         if (username == null) {
             launchNameDialog();
         } else {
-            updateExpansions();
+//            updateExpansions();
             welcomePlayerTxt.setText(getString(R.string.welcome_text, username));
         }
 
-        makeSlideGesture();
-
+//        makeSlideGesture();
+        fabricateGames(selectedDate);
+//        slideGestureMaker();
         deletedGames = new ArrayList<Game>();
     }
-    }
-    private void loadSavedUsername() {}
-    private void setHourPickerValues() {}
 
-    private void startAnimationDown(ObjectAnimator flipAnimator) {
-        hourPicker.setValue(hourPicker.getValue() - 1);
-        selectedHour = selectedHour - 100;
-        if (selectedHour < -1) {
-            selectedHour = 2300;
-        }
-        for (int i = 0; i < 4; i++) {
-            slotExpansions[i].collapse(true);
-            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
-            flipAnimator.setTarget(slotHeaders[i]);
-            flipAnimator.setStartDelay(i * 100);
-            final int finalI = i;
-            flipAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    updateHeaders(finalI);
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                this.deletedGames = (ArrayList<Game>) data.getSerializableExtra("deletedGames");
+                if (this.deletedGames != null) {
+                    for (Game game : deletedGames) {
+                        int date = game.getDate();
+                        int time = game.getTime();
+                        server.removePlayer(date,time,username);
+                    }
                 }
-            });
-            flipAnimator.start();
-        }
-    }
-
-
-    private void startAnimationUp(int headerIndex, ObjectAnimator flipAnimator, int delayMultiplier) {
-
-        flipAnimator.setTarget(slotHeaders[headerIndex]);
-        switch (headerIndex) {
-            case 0:
-                flipAnimator.setStartDelay(60 * delayMultiplier);
-                break;
-            case 1:
-                flipAnimator.setStartDelay(40 * delayMultiplier);
-                break;
-            case 2:
-                flipAnimator.setStartDelay(20 * delayMultiplier);
-                break;
-            case 3:
-                flipAnimator.setStartDelay(0);
-                break;
-        }
-        final int finalI = headerIndex;
-        flipAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                updateHeaders(finalI);
-
             }
-        });
-        flipAnimator.start();
+            updateHeaders();
+//            updateExpansions();
+        }
     }
+
+    public void moveToMyTurnsActivity(View view) {
+        Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
+        intent.putExtra("username", this.username);
+        intent.putExtra("game_list", server.getPlayerAgenda(username));
+        for (int i=0; i<4;i++){
+            slotExpansions[i].collapse(true);
+        }
+        startActivityForResult(intent,1);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+
+    private void valueChangeAnimate(int oldVal, int newVal) {} //todo - need to create
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void slideGestureMaker(){} //todo - need to create
 
 
     private void updateHeaders() {
@@ -147,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         nameDialog = NameDialog.newInstance("Welcome!");
         nameDialog.show(fm, "fragment_edit_name");
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     private void makeSlideGesture() {
@@ -235,9 +240,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 selectedDate = date.year + date.month * 10000 + date.day * 1000000;
 
                 updateHeaderIcons();
-                updateExpansions();
+//                updateExpansions();
             }
         })
+                // todo - we should think about cutting this to another inner method
                 // design
                 .setPromptText("Select a day to play !")
                 .setMonthBaseBgColor(0xF2FCFCFC)
@@ -250,24 +256,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         builder.show();
     }
 
-    /**
-     * time picker on value changed listener
-     */
-    private void setHourPickerListener() {
 
-        hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//               for (ExpansionLayout e : slotExpansions) {
-//                    e.collapse(true);
-//               }
-                valueChangeAnimate(oldVal, newVal);
-                selectedHour = newVal * Server.INTERVAL;
-                updateHeaders();
-                updateExpansions();
-            }
-        });
-    }
 
     private void updateHeaderTimes() {
 
@@ -286,34 +275,43 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
 
     }
-
-
     /**
      * Connect between Objects and XML representation of them
      */
     private void connectViewsToXML() {
-        hourPicker = findViewById(R.id.hour_picker);
 
+        //todo - should seperate to 3 inner methods
+        hourPicker = findViewById(R.id.hour_picker);
         dateButton = findViewById(R.id.dateButton);
 
 //        myTurnsBtn = findViewById(R.id.savedTurnBtn);
 
         welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
-
         slotExpansions[0] = findViewById(R.id.expansionLayout1);
         slotExpansions[1] = findViewById(R.id.expansionLayout2);
         slotExpansions[2] = findViewById(R.id.expansionLayout3);
         slotExpansions[3] = findViewById(R.id.expansionLayout4);
-
         slotHeaders[0] = findViewById(R.id.slot_header_1);
         slotHeaders[1] = findViewById(R.id.slot_header_2);
         slotHeaders[2] = findViewById(R.id.slot_header_3);
         slotHeaders[3] = findViewById(R.id.slot_header_4);
-
         headerTexts[0] = findViewById(R.id.header_text1);
         headerTexts[1] = findViewById(R.id.header_text2);
         headerTexts[2] = findViewById(R.id.header_text3);
         headerTexts[3] = findViewById(R.id.header_text4);
+        headerRacketIcons[0] = findViewById(R.id.racket_icon1);
+        headerRacketIcons[1] = findViewById(R.id.racket_icon2);
+        headerRacketIcons[2] = findViewById(R.id.racket_icon3);
+        headerRacketIcons[3] = findViewById(R.id.racket_icon4);
+        leftJoinButtons[0] = findViewById(R.id.join_button_left1);
+        leftJoinButtons[1] = findViewById(R.id.join_button_left2);
+        leftJoinButtons[2] = findViewById(R.id.join_button_left3);
+        leftJoinButtons[3] = findViewById(R.id.join_button_left4);
+        rightJoinButtons[0] = findViewById(R.id.join_button_right1);
+        rightJoinButtons[1] = findViewById(R.id.join_button_right2);
+        rightJoinButtons[2] = findViewById(R.id.join_button_right3);
+        rightJoinButtons[3] = findViewById(R.id.join_button_right4);
+        linearLayout = findViewById(R.id.slotButtonsLayout);
     }
 
     private void updateHeaderIcons() {
@@ -349,24 +347,105 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         }
     }
-}
 
-    void fabricateGames(int date) {
-        server.addPlayer(date, 1200, "Nir");
-        server.addPlayer(date, 1200, "Eyal");
-        server.addPlayer(date, 1215, "Liav");
-        server.addPlayer(date, 1230, "Yoni");
-        server.addPlayer(date, 1300, "Avner");
-        server.addPlayer(date, 1500, "Nir");
-        server.addPlayer(date, 1515, "Ran");
-        server.addPlayer(date, 1515, "Nir");
-        server.addPlayer(date, 1645, "Ran");
-        server.addPlayer(date, 1645, "Nir");
-        server.addPlayer(date, 1615, "Nir");
-//        addPlayer(22122019, 1600, "Eyal");
-//        addPlayer(22122019, 1200, "Liav");
-//        addPlayer(22122019, 1200, "Ran");
-        server.addPlayer(date, 1400, "Avner");
+    private void updateHeaderIcons(int i){} //todo - need to create the same method with int arg
+
+    private void setHourPickerValues() {} //todo - need to create this
+
+    private int timeOffset(int buttonId){
+        return 0;
+    } // todo - create timeOffset method
+
+    private void startAnimationDown(ObjectAnimator flipAnimator) {
+        hourPicker.setValue(hourPicker.getValue() - 1);
+        selectedHour = selectedHour - 100;
+        if (selectedHour < -1) {
+            selectedHour = 2300;
+        }
+        for (int i = 0; i < 4; i++) {
+            slotExpansions[i].collapse(true);
+//            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
+            flipAnimator.setTarget(slotHeaders[i]);
+            flipAnimator.setStartDelay(i * 100);
+            final int finalI = i;
+            flipAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    updateHeaders(finalI);
+
+                }
+            });
+            flipAnimator.start();
+        }
     }
 
+
+    private void startAnimationUp(int headerIndex, ObjectAnimator flipAnimator, int delayMultiplier) {
+
+        flipAnimator.setTarget(slotHeaders[headerIndex]);
+        switch (headerIndex) {
+            case 0:
+                flipAnimator.setStartDelay(60 * delayMultiplier);
+                break;
+            case 1:
+                flipAnimator.setStartDelay(40 * delayMultiplier);
+                break;
+            case 2:
+                flipAnimator.setStartDelay(20 * delayMultiplier);
+                break;
+            case 3:
+                flipAnimator.setStartDelay(0);
+                break;
+        }
+        final int finalI = headerIndex;
+        flipAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                updateHeaders(finalI);
+
+            }
+        });
+        flipAnimator.start();
+    }
+
+
+    /**
+     * time picker on value changed listener
+     */
+    private void setHourPickerListener() {
+
+        hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//               for (ExpansionLayout e : slotExpansions) {
+//                    e.collapse(true);
+//               }
+                valueChangeAnimate(oldVal, newVal);
+                selectedHour = newVal * Server.INTERVAL;
+                updateHeaders();
+//                updateExpansions();
+            }
+        });
+    }
+
+
+    private void loadSavedUsername() {}
+
+
+    void fabricateGames(int date) {
+        server.addPlayer(date, 1200, "Ran");
+        server.addPlayer(date, 1200, "Ruti");
+        server.addPlayer(date, 1215, "Or");
+        server.addPlayer(date, 1230, "Roey");
+        server.addPlayer(date, 1300, "Rom");
+        server.addPlayer(date, 1500, "Ran");
+        server.addPlayer(date, 1515, "Ruti");
+        server.addPlayer(date, 1515, "Or");
+        server.addPlayer(date, 1645, "Roey");
+        server.addPlayer(date, 1645, "Rom");
+        server.addPlayer(date, 1615, "Ran");
+        server.addPlayer(date, 1400, "Ruti");
+    }
 }
