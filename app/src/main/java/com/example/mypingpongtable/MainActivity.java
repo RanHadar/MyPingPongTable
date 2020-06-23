@@ -97,7 +97,38 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         deletedGames = new ArrayList<Game>();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                this.deletedGames = (ArrayList<Game>) data.getSerializableExtra("deletedGames");
+                if (this.deletedGames != null) {
+                    for (Game game : deletedGames) {
+                        int date = game.getDate();
+                        int time = game.getTime();
+                        server.removePlayer(date,time,username);
+                    }
+                }
+            }
+            updateHeaders();
+            updateExpansions();
+        }
     }
+
+    public void moveToMyTurnsActivity(View view) {
+        Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
+        intent.putExtra("username", this.username);
+        intent.putExtra("game_list", server.getPlayerAgenda(username));
+        for (int i=0; i<4;i++){
+            slotExpansions[i].collapse(true);
+        }
+        startActivityForResult(intent,1);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+
     private void loadSavedUsername() {}
     private void setHourPickerValues() {}
 
