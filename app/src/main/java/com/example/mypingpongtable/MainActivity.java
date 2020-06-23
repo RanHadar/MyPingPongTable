@@ -293,8 +293,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
-
-
     private void updateHeaderIcons(int i) {
         ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
         server.saveState();
@@ -331,6 +329,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 break;
         }
     }
+
+
+
     private void setHourPickerValues() {
 
     } //todo - need to create this
