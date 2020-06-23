@@ -53,13 +53,13 @@ class Server implements java.io.Serializable{
                 FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") +
                         "/server_data.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                server = (Server) in.readObject();
-                server.refreshGames();
-                in.close();
+                server = (Server) in.readObject();                                                      // Reads the server state from a file we saved earlier to go on from the same state we were in (if we saved one earlier - otherwise it will create a new one)
+                server.refreshGames();                                                                  // Sets us to be the server for all the games in the list: game_list
+                in.close();object serialization
                 fileIn.close();
             } catch (IOException i) {
                 i.printStackTrace();
-                server = new Server();
+                server = new Server();                                                                  // Creates a new server if we don't have a saved one
             } catch (ClassNotFoundException c) {
                 System.out.println("Server class not found");
                 c.printStackTrace();
@@ -106,9 +106,13 @@ class Server implements java.io.Serializable{
     }
 
     /**
-     * Returns an ArrayList of Games of given date and hour. The size of the ArrayList is the number
+     * Returns an ArrayList of Games of given date and hour in case such games exists on game_list.
+     * The size of the ArrayList (number of games will be created) is the number
      * of game slots that fit in one hour, so if each game is 15 minutes, the returned ArrayList
-     * will be of size 4.
+     * will be of size 4 (currently).
+     *
+     * SO RETURNS NEW ArrayList<Game> with the 4 games according to "date" (each one every 15 min) if exists in game_list,
+     * OTHERWISE - Creates the new games in those slots (each one every 15 min)
      * @param date - an integer in the format DDMMYEAR or DMMYEAR,
      *             ex. 20112019, 1012020
      * @param hour - a round hour in the format of HHMM or HMM or MM:
@@ -144,11 +148,11 @@ class Server implements java.io.Serializable{
     ArrayList<Game> getDayAgenda(int date){
         ArrayList<Game> game_slots = new ArrayList<>();
         for (int hour = 0; hour < HOURS_IN_DAY; hour++){
-            game_slots.addAll(getHourAgenda(date, hour * INTERVAL));
+            game_slots.addAll(getHourAgenda(date, hour * INTERVAL));                            // If already exists a game on that hour + date use it, otherwise creates new one for that slot
         }
         return game_slots;
     }
-
+                                                                                                      // למה הכל פה נקרא Agenda??
     /**
      * Returns an ArrayList of Games of a given player.
      * @param player the player name to get games of
@@ -253,7 +257,7 @@ class Server implements java.io.Serializable{
     }
 
     /**
-     * Resets the server. After calling this method, you should user getInstance again.
+     * Resets the server. After calling this method, you should call user getInstance again.
      */
     void reset(){
         game_list = new ArrayList<>();
