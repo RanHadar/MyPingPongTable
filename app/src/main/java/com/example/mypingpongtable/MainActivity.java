@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentManager;
-
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -294,9 +293,47 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
-    private void updateHeaderIcons(int i){} //todo - need to create the same method with int arg
 
-    private void setHourPickerValues() {} //todo - need to create this
+
+    private void updateHeaderIcons(int i) {
+        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
+        server.saveState();
+
+        headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+        switch (games.get(i).empty_slots()) {
+            case 0:
+                if (games.get(i).getPlayer1().equals(username) || games.get(i).getPlayer2().equals(username)) {
+                    headerRacketIcons[i].setImageResource(R.drawable.game_full);
+                    headerRacketIcons[i].setVisibility(View.VISIBLE);
+                    headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else {
+                    headerRacketIcons[i].setImageResource(R.drawable.lock);
+                    headerRacketIcons[i].setVisibility(View.VISIBLE);
+                    headerTexts[i].setTextColor(getResources().getColor(R.color.GREY));
+                }
+
+                break;
+            case 1:
+                headerRacketIcons[i].setVisibility(View.VISIBLE);
+                headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                if (((games.get(i).getPlayer1() != null) && (games.get(i).getPlayer1().equals(username))
+                ) || ((games.get(i).getPlayer2() != null) && (games.get(i).getPlayer2().equals(username)))) {
+                    headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                } else {
+                    headerRacketIcons[i].setImageResource(R.drawable.half_open);
+                }
+                break;
+            case 2:
+                headerRacketIcons[i].setImageResource(R.drawable.game_open);
+                headerRacketIcons[i].setVisibility(View.INVISIBLE);
+                headerTexts[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+        }
+    }
+    private void setHourPickerValues() {
+
+    } //todo - need to create this
 
     private int timeOffset(int buttonId){
         return 0;
@@ -376,9 +413,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
     }
 
-
     private void loadSavedUsername() {}
-
 
     void fabricateGames(int date) {
         server.addPlayer(date, 1200, "Ran");
