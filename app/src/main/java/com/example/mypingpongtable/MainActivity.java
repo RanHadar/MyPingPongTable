@@ -148,6 +148,60 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         nameDialog.show(fm, "fragment_edit_name");
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void makeSlideGesture() {
+
+        for (int i = 0; i < 4; i++) {
+
+            slotHeaders[i].setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // TODO Auto-generated method stub
+                    switch (event.getAction()) {
+
+                        case MotionEvent.ACTION_DOWN:
+                            gestureCoord1 = event.getY();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+
+                            gestureCoord2 = event.getY();
+                            float deltaY = gestureCoord2 - gestureCoord1;
+                            ObjectAnimator flip;
+
+                            if (deltaY < -20) {
+                                hourPicker.setValue(hourPicker.getValue() + 1);
+                                selectedHour = selectedHour + 100;
+
+                                if (selectedHour > 2301) {
+                                    selectedHour = 0;
+                                }
+                                for (int i = 0; i < 4; i++) {
+                                    slotExpansions[i].collapse(true);
+
+                                    flip = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                                            getApplicationContext(), R.animator.flip_up);
+
+                                    startAnimationUp(i, flip, 5);
+
+                                    updateExpansions();
+                                }
+
+                            } else if (deltaY > 20) {
+                                flip = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                                        getApplicationContext(), R.animator.flip_up);
+                                startAnimationDown(flip);
+
+                                updateExpansions();
+                            }
+                            break;
+                    }
+                    return false;
+                }
+            });
+        }
+    }
+
     /**
      * set time picker default value to current time
      */
@@ -295,4 +349,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         }
     }
+}
+
+    void fabricateGames(int date) {
+        server.addPlayer(date, 1200, "Nir");
+        server.addPlayer(date, 1200, "Eyal");
+        server.addPlayer(date, 1215, "Liav");
+        server.addPlayer(date, 1230, "Yoni");
+        server.addPlayer(date, 1300, "Avner");
+        server.addPlayer(date, 1500, "Nir");
+        server.addPlayer(date, 1515, "Ran");
+        server.addPlayer(date, 1515, "Nir");
+        server.addPlayer(date, 1645, "Ran");
+        server.addPlayer(date, 1645, "Nir");
+        server.addPlayer(date, 1615, "Nir");
+//        addPlayer(22122019, 1600, "Eyal");
+//        addPlayer(22122019, 1200, "Liav");
+//        addPlayer(22122019, 1200, "Ran");
+        server.addPlayer(date, 1400, "Avner");
+    }
+
 }
