@@ -298,7 +298,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     private void setHourPickerValues() {} //todo - need to create this
 
-    private int timeOffset(int buttonId){} // todo - create timeOffset method
+    private int timeOffset(int buttonId){
+        return 0;
+    } // todo - create timeOffset method
 
     private void startAnimationDown(ObjectAnimator flipAnimator) {
         hourPicker.setValue(hourPicker.getValue() - 1);
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
         for (int i = 0; i < 4; i++) {
             slotExpansions[i].collapse(true);
-            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
+//            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
             flipAnimator.setTarget(slotHeaders[i]);
             flipAnimator.setStartDelay(i * 100);
             final int finalI = i;
