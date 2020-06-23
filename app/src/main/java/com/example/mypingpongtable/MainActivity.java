@@ -467,7 +467,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private void loadSavedUsername() {}
+    private void loadSavedUsername() {
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+        username = sharedPref.getString(getString(R.string.username), null);
+
+
+    }
 
 
     void fabricateGames(int date) {
