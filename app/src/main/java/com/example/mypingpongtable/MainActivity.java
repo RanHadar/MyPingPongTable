@@ -75,27 +75,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         server = Server.getInstance();
-
         connectViewsToXML();
         setHourPickerValues();
         setHourPickerListener();
         setDefaultDateAndTime();
         fabricateGames(selectedDate);
-
         updateHeaders();
-
-        loadSavedUsername();
+//        loadSavedUsername();
 
         if (username == null) {
             launchNameDialog();
         } else {
-//            updateExpansions();
+            updateExpansions();
             welcomePlayerTxt.setText(getString(R.string.welcome_text, username));
         }
 
 //        makeSlideGesture();
         fabricateGames(selectedDate);
-//        slideGestureMaker();
+        slideGestureMaker();
         deletedGames = new ArrayList<Game>();
     }
 
@@ -175,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
+
+
     public void selectDate(View button) {
 
         Builder builder = new Builder(MainActivity.this, new Builder.CalendarPickerOnConfirm() {
@@ -230,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         hourPicker = findViewById(R.id.hour_picker);
         dateButton = findViewById(R.id.dateButton);
 
-//        myTurnsBtn = findViewById(R.id.savedTurnBtn);
+        myTurnsBtn = findViewById(R.id.savedTurnBtn);
 
         welcomePlayerTxt = findViewById(R.id.welcomePlayerTxt);
         slotExpansions[0] = findViewById(R.id.expansionLayout1);
@@ -332,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-
     private void setHourPickerValues() {
 
         hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -349,42 +347,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
 
 
-    }
-    public void updateExpansions() {
-        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
-
-        for (int i = 0; i < GAMES_PER_HOUR; i++) {
-
-            updateJoinButton(leftJoinButtons[i], games.get(i).getPlayer1());
-
-            updateJoinButton(rightJoinButtons[i], games.get(i).getPlayer2());
-        }
-    }
-
-
-    private void updateJoinButton(Button joinButton, String playerName) {
-        Drawable bg = joinButton.getBackground();
-        bg = DrawableCompat.wrap(bg);
-
-        if (playerName == null) {
-            joinButton.setText(R.string.join_button_init_text);
-            joinButton.setTextColor(getResources().getColor(R.color.white));
-            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Green));
-            joinButton.setClickable(true);
-
-        } else if (username.equals(playerName)) {
-            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
-            joinButton.setText(playerName);
-            joinButton.setTextColor(getResources().getColor(R.color.white));
-            joinButton.setClickable(true);
-
-        } else {
-            DrawableCompat.setTint(bg, Color.TRANSPARENT);
-            joinButton.setText(playerName);
-            joinButton.setTextColor(getResources().getColor(R.color.colorPrimary));
-            joinButton.setClickable(false);
-
-        }
     }
 
 
@@ -466,8 +428,43 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
     }
 
+    public void confirmName(View view) {}
 
-    private void loadSavedUsername() {}
+    public void updateExpansions() {
+        ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
+
+        for (int i = 0; i < GAMES_PER_HOUR; i++) {
+
+            updateJoinButton(leftJoinButtons[i], games.get(i).getPlayer1());
+
+            updateJoinButton(rightJoinButtons[i], games.get(i).getPlayer2());
+        }
+    }
+
+    private void updateJoinButton(Button joinButton, String playerName) {
+        Drawable bg = joinButton.getBackground();
+        bg = DrawableCompat.wrap(bg);
+
+        if (playerName == null) {
+            joinButton.setText(R.string.join_button_init_text);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Green));
+            joinButton.setClickable(true);
+
+        } else if (username.equals(playerName)) {
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
+            joinButton.setText(playerName);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            joinButton.setClickable(true);
+
+        } else {
+            DrawableCompat.setTint(bg, Color.TRANSPARENT);
+            joinButton.setText(playerName);
+            joinButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+            joinButton.setClickable(false);
+
+        }
+    }
 
 
     void fabricateGames(int date) {
