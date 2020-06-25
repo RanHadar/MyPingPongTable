@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         setDefaultDateAndTime();
         fabricateGames(selectedDate);
         updateHeaders();
-//        loadSavedUsername();
+        loadSavedUsername();
 
         if (username == null) {
             launchNameDialog();
@@ -99,19 +99,19 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1) {
+        if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 this.deletedGames = (ArrayList<Game>) data.getSerializableExtra("deletedGames");
                 if (this.deletedGames != null) {
                     for (Game game : deletedGames) {
                         int date = game.getDate();
                         int time = game.getTime();
-                        server.removePlayer(date,time,username);
+                        server.removePlayer(date, time, username);
                     }
                 }
             }
             updateHeaders();
-//            updateExpansions();
+            updateExpansions();
         }
     }
 
@@ -119,18 +119,20 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
         intent.putExtra("username", this.username);
         intent.putExtra("game_list", server.getPlayerAgenda(username));
-        for (int i=0; i<4;i++){
+        for (int i = 0; i < 4; i++) {
             slotExpansions[i].collapse(true);
         }
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 
-    private void valueChangeAnimate(int oldVal, int newVal) {} //todo - need to create
+    private void valueChangeAnimate(int oldVal, int newVal) {
+    } //todo - need to create
 
     @SuppressLint("ClickableViewAccessibility")
-    private void slideGestureMaker(){} //todo - need to create
+    private void slideGestureMaker() {
+    } //todo - need to create
 
 
     private void updateHeaders() {
@@ -173,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-
     public void selectDate(View button) {
 
         Builder builder = new Builder(MainActivity.this, new Builder.CalendarPickerOnConfirm() {
@@ -185,7 +186,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 selectedDate = date.year + date.month * 10000 + date.day * 1000000;
 
                 updateHeaderIcons();
-//                updateExpansions();
+                updateExpansions();
+//
             }
         })
                 // todo - we should think about cutting this to another inner method
@@ -200,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         builder.show();
     }
-
 
 
     private void updateHeaderTimes() {
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
 
     }
+
     /**
      * Connect between Objects and XML representation of them
      */
@@ -350,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private int timeOffset(int buttonId){
+    private int timeOffset(int buttonId) {
         return 0;
     } // todo - create timeOffset method
 
@@ -362,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
         for (int i = 0; i < 4; i++) {
             slotExpansions[i].collapse(true);
-//            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
+            flipAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.flip_down);
             flipAnimator.setTarget(slotHeaders[i]);
             flipAnimator.setStartDelay(i * 100);
             final int finalI = i;
@@ -428,7 +430,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
     }
 
-    public void confirmName(View view) {}
+    public void confirmName(View view) {
+    }
 
     public void updateExpansions() {
         ArrayList<Game> games = server.getHourAgenda(selectedDate, selectedHour);
@@ -466,6 +469,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
+    private void loadSavedUsername() {
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+        username = sharedPref.getString(getString(R.string.username), null);
+
+    }
+
 
     void fabricateGames(int date) {
         server.addPlayer(date, 1200, "Ran");
@@ -482,3 +493,4 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         server.addPlayer(date, 1400, "Ruti");
     }
 }
+
