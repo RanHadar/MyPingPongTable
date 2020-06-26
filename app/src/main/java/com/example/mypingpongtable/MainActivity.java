@@ -442,10 +442,54 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
 
-    private int timeOffset(int buttonId){
-        return 0;
-    } // todo - create timeOffset method
 
+    private int timeOffset(int buttonId) {
+        switch (buttonId) {
+            case R.id.join_button_left2:
+            case R.id.join_button_right2:
+                return 15;
+
+            case R.id.join_button_left3:
+            case R.id.join_button_right3:
+                return 30;
+
+            case R.id.join_button_left4:
+            case R.id.join_button_right4:
+                return 45;
+
+            default:
+                return 0;
+        }
+    }
+
+
+     public void joinButtonHandler(View view) {
+        Button joinButton = (Button) view;
+        Drawable bg = joinButton.getBackground();
+        bg = DrawableCompat.wrap(bg);
+
+        int time = selectedHour + timeOffset(joinButton.getId());
+        Game chosenGame = server.getGame(selectedDate, time);
+
+        if (chosenGame.addPlayer(username)) {
+
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
+            joinButton.setText(username);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            server.saveState();
+            Toast.makeText(this, getString(R.string.join_message), Toast.LENGTH_SHORT).show();
+
+        } else if (joinButton.getText().toString().equals(username)) {
+            DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Green));
+            joinButton.setText(R.string.join_button_init_text);
+            joinButton.setTextColor(getResources().getColor(R.color.white));
+            chosenGame.removePlayer(username);
+
+        } else {
+            Toast.makeText(this, getString(R.string.join_twice_message), Toast.LENGTH_SHORT).show();
+        }
+        updateHeaderIcons();
+    }
     private void startAnimationDown(ObjectAnimator flipAnimator) {
         hourPicker.setValue(hourPicker.getValue() - 1);
         selectedHour = selectedHour - 100;
