@@ -18,3 +18,8 @@
 ## Usage
 - Enter your user name.
 - Schedule your next game right away!
+
+## Features to work on - for contributors
+1. Disable myturn button if no games - Done
+2. Validations on the new user name 
+
