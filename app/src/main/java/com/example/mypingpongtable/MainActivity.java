@@ -10,6 +10,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private TextView welcomePlayerTxt;
     private NameDialog nameDialog;
     private Button dateButton;
+    private  int currentGamePos = 0;
 //    private Button myTurnsBtn;
 
     float x1, x2;
@@ -116,23 +118,81 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     private void addToCalendar() {
-        Calendar cal = Calendar.getInstance();
         ArrayList<Game> games = server.getPlayerAgenda(username);
-        for(Game game: games) {
-            Intent intent = new Intent(Intent.ACTION_EDIT);
-            intent.setType("vnd.android.cursor.item/event");
-            intent.putExtra("beginTime", game.getTime());
-            intent.putExtra("allDay", false);
-            intent.putExtra("rrule", "FREQ=YEARLY");
-            intent.putExtra("endTime", game.getTime()+60*60*1000);
-            if((game.getPlayer1() == null || game.getPlayer1().equals("")) ||
-                        (game.getPlayer2() == null || game.getPlayer2().equals("")))
-                intent.putExtra("title", username + " plays ping-pong against unknown");
-            else
-                intent.putExtra("title", game.getPlayer1() + " plays ping-pong against "
-                                                                        + game.getPlayer2());
-            startActivity(intent);
+        if(games.size() == 0){
+            Toast.makeText(this,"you have no pending games",Toast.LENGTH_LONG).show();
+        }else{
+            android.app.AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            View v = getLayoutInflater().inflate(R.layout.choose_event_dialog, null);
+            dialogBuilder.setView(v);
+            final AlertDialog alertdialog = dialogBuilder.create();
+            onClickDialog(v, alertdialog, games);
+            alertdialog.show();
         }
+
+    }
+
+    private void onClickDialog(View v, final AlertDialog alertdialog,
+                               final ArrayList<Game> games) {
+        ImageView prevBtn = v.findViewById(R.id.swipeLeftBtn);
+        ImageView nextBtn = v.findViewById(R.id.swipeRightBtn);
+        Button addBtn = v.findViewById(R.id.addEvantBtn);
+        Button cancelBtn = v.findViewById(R.id.cancelAddBtn);
+
+        final TextView dateTextView = v.findViewById(R.id.dateTextView);
+        final TextView hourTextView = v.findViewById(R.id.hourTextView);
+        Game game = games.get(currentGamePos);
+        dateTextView.setText("Date: "+game.getDateString());
+        hourTextView.setText("Hour: "+game.getTimeString());
+
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGamePos = (currentGamePos-1) % games.size();
+                Game game = games.get(currentGamePos);
+                dateTextView.setText("Date: "+game.getDateString());
+                hourTextView.setText("Hour: "+game.getTimeString());
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGamePos = (currentGamePos+1) % games.size();
+                Game game = games.get(currentGamePos);
+                dateTextView.setText("Date: "+game.getDateString());
+                hourTextView.setText("Hour: "+game.getTimeString());
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Game game = games.get(currentGamePos);
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setType("vnd.android.cursor.item/event");
+                intent.putExtra("beginTime", game.getTime());
+                intent.putExtra("allDay", false);
+                intent.putExtra("rrule", "FREQ=YEARLY");
+                intent.putExtra("endTime", game.getTime()+60*60*1000);
+                if((game.getPlayer1() == null || game.getPlayer1().equals("")) ||
+                        (game.getPlayer2() == null || game.getPlayer2().equals("")))
+                    intent.putExtra("title", username + " plays ping-pong against unknown");
+                else
+                    intent.putExtra("title", game.getPlayer1() + " plays ping-pong against "
+                            + game.getPlayer2());
+                startActivity(intent);
+                alertdialog.cancel();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertdialog.cancel();
+            }
+        });
+
 
     }
 

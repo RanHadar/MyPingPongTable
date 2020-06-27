@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/chooseEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="please choose evant to add to calendar"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Date: "
+        app:layout_constraintEnd_toEndOf="@+id/chooseEventTitle"
+        app:layout_constraintStart_toStartOf="@+id/chooseEventTitle"
+        app:layout_constraintTop_toBottomOf="@+id/chooseEventTitle" />
+
+    <TextView
+        android:id="@+id/hourTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="Hour:"
+        app:layout_constraintEnd_toEndOf="@+id/dateTextView"
+        app:layout_constraintStart_toStartOf="@+id/dateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+    <ImageView
+        android:id="@+id/swipeRightBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hourTextView"
+        app:layout_constraintStart_toEndOf="@+id/dateTextView"
+        app:layout_constraintTop_toTopOf="@+id/dateTextView"
+        app:srcCompat="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/swipeLeftBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hourTextView"
+        app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+        app:layout_constraintTop_toTopOf="@+id/dateTextView"
+        app:srcCompat="@drawable/left" />
+
+    <Button
+        android:id="@+id/addEvantBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="add"
+        app:layout_constraintEnd_toEndOf="@+id/swipeRightBtn"
+        app:layout_constraintStart_toStartOf="@+id/swipeLeftBtn"
+        app:layout_constraintTop_toBottomOf="@+id/hourTextView" />
+
+    <Button
+        android:id="@+id/cancelAddBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancel"
+        app:layout_constraintEnd_toEndOf="@+id/addEvantBtn"
+        app:layout_constraintStart_toStartOf="@+id/addEvantBtn"
+        app:layout_constraintTop_toBottomOf="@+id/addEvantBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
