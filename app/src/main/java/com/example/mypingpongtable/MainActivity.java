@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         setHourPickerListener();
         setDefaultDateAndTime();
         updateHeaders();
+        setAddToCalendarListener();
+
 
         sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -102,6 +104,36 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         slideGestureMaker();
 
         deletedGames = new ArrayList<Game>();
+    }
+
+    private void setAddToCalendarListener() {
+        findViewById(R.id.addToCalendatBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToCalendar();
+            }
+        });
+    }
+
+    private void addToCalendar() {
+        Calendar cal = Calendar.getInstance();
+        ArrayList<Game> games = server.getPlayerAgenda(username);
+        for(Game game: games) {
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setType("vnd.android.cursor.item/event");
+            intent.putExtra("beginTime", game.getTime());
+            intent.putExtra("allDay", false);
+            intent.putExtra("rrule", "FREQ=YEARLY");
+            intent.putExtra("endTime", game.getTime()+60*60*1000);
+            if((game.getPlayer1() == null || game.getPlayer1().equals("")) ||
+                        (game.getPlayer2() == null || game.getPlayer2().equals("")))
+                intent.putExtra("title", username + " plays ping-pong against unknown");
+            else
+                intent.putExtra("title", game.getPlayer1() + " plays ping-pong against "
+                                                                        + game.getPlayer2());
+            startActivity(intent);
+        }
+
     }
 
     @Override

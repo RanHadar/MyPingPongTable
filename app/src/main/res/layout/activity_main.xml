@@ -551,14 +551,26 @@
                 android:id="@+id/hour_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/addToCalendatBtn"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorAccent"
-                android:theme="@style/AppTheme.Picker"
+                android:layout_marginBottom="119dp"
 
+                android:backgroundTint="@color/colorAccent"
                 android:clickable="false"
                 android:descendantFocusability="blocksDescendants"
-                android:focusable="true" />
+                android:focusable="true"
+                android:theme="@style/AppTheme.Picker" />
+
+            <Button
+                android:id="@+id/addToCalendatBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="11dp"
+                android:layout_marginBottom="18dp"
+                android:text="Add to Calendar"
+                android:textSize="9sp" />
         </RelativeLayout>
 
     </LinearLayout>
