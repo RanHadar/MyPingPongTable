@@ -425,12 +425,29 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 valueChangeAnimate(oldVal, newVal);
                 selectedHour = newVal * Server.INTERVAL;
                 updateHeaders();
-//                updateExpansions();
+                updateExpansions();
             }
         });
     }
 
     public void confirmName(View view) {
+        // todo - do something if name is empty
+        EditText tx = nameDialog.mEditText;
+        username = tx.getText().toString();
+
+        if (username.length() == 0) {
+            tx.getBackground().setTint(Color.RED);
+        } else if (username.length() > MAX_USERNAME_LEN) {
+            Toast.makeText(this, getString(R.string.name_too_long_message), Toast.LENGTH_SHORT).show();
+        } else {
+            nameDialog.dismiss();
+            username = username.toLowerCase();
+            username = username.substring(0, 1).toUpperCase() + username.substring(1);
+            editor.putString(getString(R.string.username), username);
+            editor.commit();
+            updateExpansions();
+            welcomePlayerTxt.setText(getString(R.string.welcome_text, username));
+        }
     }
 
     public void updateExpansions() {
