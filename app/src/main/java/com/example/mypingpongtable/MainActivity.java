@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private ExpansionsViewGroupLinearLayout linearLayout;
+    private TextView savedTurnsText;
 
 
     @Override
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         slideGestureMaker();
 
         deletedGames = new ArrayList<Game>();
+        savedTurnsText = findViewById(R.id.savedTurnText);
+        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
     }
 
     private void setAddToCalendarListener() {
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                         int date = game.getDate();
                         int time = game.getTime();
                         server.removePlayer(date,time,username);
+                        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
                     }
                 }
             }
@@ -216,14 +220,18 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     public void moveToMyTurnsActivity(View view) {
-        Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
-        intent.putExtra("username", this.username);
-        intent.putExtra("game_list", server.getPlayerAgenda(username));
-        for (int i=0; i<4;i++){
-            slotExpansions[i].collapse(true);
+        if(!server.getPlayerAgenda(username).isEmpty()){
+            Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
+            intent.putExtra("username", this.username);
+            intent.putExtra("game_list", server.getPlayerAgenda(username));
+            for (int i=0; i<4;i++){
+                slotExpansions[i].collapse(true);
+            }
+            startActivityForResult(intent,1);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } else {
+            Toast.makeText(this, "Your Games List is Empty!", Toast.LENGTH_SHORT).show();
         }
-        startActivityForResult(intent,1);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void valueChangeAnimate(int oldVal, int newVal) {
@@ -651,11 +659,13 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             joinButton.setText(R.string.join_button_init_text);
             joinButton.setTextColor(getResources().getColor(R.color.white));
             chosenGame.removePlayer(username);
+            savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
 
         } else {
             Toast.makeText(this, getString(R.string.join_twice_message), Toast.LENGTH_SHORT).show();
         }
         updateHeaderIcons();
+        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
     }
 
 
