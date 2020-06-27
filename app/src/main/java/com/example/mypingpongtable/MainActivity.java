@@ -124,14 +124,18 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     public void moveToMyTurnsActivity(View view) {
-        Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
-        intent.putExtra("username", this.username);
-        intent.putExtra("game_list", server.getPlayerAgenda(username));
-        for (int i=0; i<4;i++){
-            slotExpansions[i].collapse(true);
+        if(!server.getPlayerAgenda(username).isEmpty()){
+            Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
+            intent.putExtra("username", this.username);
+            intent.putExtra("game_list", server.getPlayerAgenda(username));
+            for (int i=0; i<4;i++){
+                slotExpansions[i].collapse(true);
+            }
+            startActivityForResult(intent,1);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } else {
+            Toast.makeText(this, "Your Games List is Empty!", Toast.LENGTH_SHORT).show();
         }
-        startActivityForResult(intent,1);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void valueChangeAnimate(int oldVal, int newVal) {
