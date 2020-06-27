@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private ExpansionsViewGroupLinearLayout linearLayout;
+    private TextView savedTurnsText;
 
 
     @Override
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         slideGestureMaker();
 
         deletedGames = new ArrayList<Game>();
+        savedTurnsText = findViewById(R.id.savedTurnText);
+        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
     }
 
     @Override
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                         int date = game.getDate();
                         int time = game.getTime();
                         server.removePlayer(date,time,username);
+                        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
                     }
                 }
             }
@@ -563,11 +567,13 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             joinButton.setText(R.string.join_button_init_text);
             joinButton.setTextColor(getResources().getColor(R.color.white));
             chosenGame.removePlayer(username);
+            savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
 
         } else {
             Toast.makeText(this, getString(R.string.join_twice_message), Toast.LENGTH_SHORT).show();
         }
         updateHeaderIcons();
+        savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
     }
 
 
