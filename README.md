@@ -21,5 +21,6 @@
 
 ## Features to work on - for contributors
 1. Disable myturn button if no games - Done
-2. Validations on the new user name 
+2. Validations on the new user name - Done
+3. Add current turn to Google Calender - Shani Done 
 
