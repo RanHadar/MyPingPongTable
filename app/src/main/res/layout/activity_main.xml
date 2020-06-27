@@ -49,6 +49,7 @@
                 android:layout_height="60dp"
                 android:background="@drawable/two_racket_icon"
                 android:backgroundTint="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:onClick="moveToMyTurnsActivity" />
             <TextView
                 android:layout_width="wrap_content"
