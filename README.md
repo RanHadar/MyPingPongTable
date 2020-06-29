@@ -19,7 +19,7 @@
 - Enter your user name.
 - Schedule your next game right away!
 
-## Features to work on - for contributors
+## Feature requests - 
 1. Disable myturn button if no games - Carmel Done
 2. Validations on the new user name - Ran Done
 3. Add current turn to Google Calender - Shani Done 
