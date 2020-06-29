@@ -10,7 +10,9 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private SharedPreferences.Editor editor;
     private ExpansionsViewGroupLinearLayout linearLayout;
     private TextView savedTurnsText;
+    private PendingIntent pendingIntent;
 
 
     @Override
@@ -652,6 +655,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             joinButton.setText(username);
             joinButton.setTextColor(getResources().getColor(R.color.white));
             server.saveState();
+            setAlarm(time);
             Toast.makeText(this, getString(R.string.join_message), Toast.LENGTH_SHORT).show();
 
         } else if (joinButton.getText().toString().equals(username)) {
@@ -666,6 +670,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
         updateHeaderIcons();
         savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
+    }
+
+    public void setAlarm(int time) {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Date date = new Date();
+        Calendar cal_alarm = Calendar.getInstance();
+        Calendar cal_now = Calendar.getInstance();
+        cal_now.setTime(date);
+        cal_alarm.setTime(date);
+        cal_alarm.set(Calendar.DATE, (selectedDate - (selectedDate % 1000000)) / 1000000);
+        cal_alarm.set(Calendar.HOUR_OF_DAY, selectedHour / 100);
+        cal_alarm.set(Calendar.MINUTE, time - selectedHour);
+        cal_alarm.set(Calendar.SECOND, 0);
+
+        Intent myIntent = new Intent(getBaseContext(), AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, myIntent, 0);
+
+        manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), pendingIntent);
     }
 
 
