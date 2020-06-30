@@ -1,6 +1,8 @@
 package com.example.mypingpongtable;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -50,6 +52,21 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
                 removeGame(position);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                                            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeGame(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(myTurnsRecyclerView);
 
         deletedGameList = new ArrayList<Game>();
     }
