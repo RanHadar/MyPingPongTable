@@ -46,13 +46,13 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         welcomePlayerTxt.setText("My Turns:");
         myTurnAdapter = new MyTurnAdapter(this, getMyList());
         myTurnsRecyclerView.setAdapter(myTurnAdapter);
-        myTurnAdapter.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onDeleteClick(View v, int position) {
-                removeGame(position);
-            }
-        });
+        setAdapterClickListener();
+        setAdapterSwipe();
 
+        deletedGameList = new ArrayList<Game>();
+    }
+
+    private void setAdapterSwipe() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                                             ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -67,8 +67,15 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
                 removeGame(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(myTurnsRecyclerView);
+    }
 
-        deletedGameList = new ArrayList<Game>();
+    private void setAdapterClickListener() {
+        myTurnAdapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onDeleteClick(View v, int position) {
+                removeGame(position);
+            }
+        });
     }
 
     private ArrayList<MyTurnSlot> getMyList() {
