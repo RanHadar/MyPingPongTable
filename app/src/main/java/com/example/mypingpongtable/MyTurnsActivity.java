@@ -1,6 +1,8 @@
 package com.example.mypingpongtable;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -44,14 +46,36 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         welcomePlayerTxt.setText("My Turns:");
         myTurnAdapter = new MyTurnAdapter(this, getMyList());
         myTurnsRecyclerView.setAdapter(myTurnAdapter);
+        setAdapterClickListener();
+        setAdapterSwipe();
+
+        deletedGameList = new ArrayList<Game>();
+    }
+
+    private void setAdapterSwipe() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                                            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeGame(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(myTurnsRecyclerView);
+    }
+
+    private void setAdapterClickListener() {
         myTurnAdapter.setItemClickListener(new ItemClickListener() {
             @Override
             public void onDeleteClick(View v, int position) {
                 removeGame(position);
             }
         });
-
-        deletedGameList = new ArrayList<Game>();
     }
 
     private ArrayList<MyTurnSlot> getMyList() {
