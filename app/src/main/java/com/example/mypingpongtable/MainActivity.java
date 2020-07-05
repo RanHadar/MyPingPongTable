@@ -650,13 +650,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         int time = selectedHour + timeOffset(joinButton.getId());
         Game chosenGame = server.getGame(selectedDate, time);
-
+        if (setAlarm(time) != 0) {
+            Toast.makeText(this, "This time has already past", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (chosenGame.addPlayer(username)) {
-
-            if (setAlarm(time) != 0) {
-                Toast.makeText(this, "This time has already past", Toast.LENGTH_SHORT).show();
-                return;
-            }
             DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
             joinButton.setText(username);
             joinButton.setTextColor(getResources().getColor(R.color.white));
