@@ -16,10 +16,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -768,6 +770,25 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         server.addPlayer(date, 1645, "Rom");
         server.addPlayer(date, 1615, "Ran");
         server.addPlayer(date, 1400, "Ruti");
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        final Configuration override = new Configuration();
+        override.setToDefaults();
+        override.fontScale = 1.0f;
+        applyOverrideConfiguration(override);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    public void applyOverrideConfiguration(Configuration overrideConfiguration) {
+        try{
+            super.applyOverrideConfiguration(overrideConfiguration);
+        }
+        catch(Exception e){
+            Log.e("Main Activity", "Fail to applyOverrideConfiguration");
+        }
     }
 }
 
