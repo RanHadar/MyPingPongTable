@@ -24,3 +24,7 @@
 2. Validations on the new user name - Ran Done
 3. Add current turn to Google Calender - Shani Done 
 
+## Notes for open-source contributers:
+See project board for new features to work on 
+https://github.com/RanHadar/MyPingPongTable/projects/1
+
