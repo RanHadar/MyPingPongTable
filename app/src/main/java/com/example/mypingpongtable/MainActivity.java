@@ -651,11 +651,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         if (chosenGame.addPlayer(username)) {
 
+            if (setAlarm(time) != 0) {
+                Toast.makeText(this, "This time has already past", Toast.LENGTH_SHORT).show();
+                return;
+            }
             DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Navy));
             joinButton.setText(username);
             joinButton.setTextColor(getResources().getColor(R.color.white));
             server.saveState();
-            setAlarm(time);
             Toast.makeText(this, getString(R.string.join_message), Toast.LENGTH_SHORT).show();
 
         } else if (joinButton.getText().toString().equals(username)) {
@@ -672,7 +675,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
     }
 
-    public void setAlarm(int time) {
+    public int setAlarm(int time) {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Date date = new Date();
         Calendar cal_alarm = Calendar.getInstance();
@@ -683,11 +686,15 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         cal_alarm.set(Calendar.HOUR_OF_DAY, selectedHour / 100);
         cal_alarm.set(Calendar.MINUTE, time - selectedHour);
         cal_alarm.set(Calendar.SECOND, 0);
+        if (cal_alarm.before(cal_now)) {
+            return -1;
+        }
 
         Intent myIntent = new Intent(getBaseContext(), AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, myIntent, 0);
 
         manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), pendingIntent);
+        return 0;
     }
 
 
