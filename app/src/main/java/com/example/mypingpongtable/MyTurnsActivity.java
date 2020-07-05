@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -120,5 +124,24 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
 
         finish();
         overridePendingTransition(0, android.R.anim.fade_out);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        final Configuration override = new Configuration();
+        override.setToDefaults();
+        override.fontScale = 1.0f;
+        applyOverrideConfiguration(override);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    public void applyOverrideConfiguration(Configuration overrideConfiguration) {
+        try{
+            super.applyOverrideConfiguration(overrideConfiguration);
+        }
+        catch(Exception e){
+            Log.e("Main Activity", "Fail to applyOverrideConfiguration");
+        }
     }
 }
