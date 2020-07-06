@@ -37,6 +37,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.ndroid.nadim:cool-toast:1.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
-
+    implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
 
 }

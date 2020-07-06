@@ -11,11 +11,12 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".MyTurnsActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MyTurnsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".AlarmReceiver" />
     </application>
-
 
 </manifest>
