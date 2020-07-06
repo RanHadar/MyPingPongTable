@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ndroid.nadim.sahel.CoolToast;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -111,8 +114,8 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         Game game = gameList.get(position);
         deletedGameList.add(game);
         gameList.remove(position);
-        Toast.makeText(getApplicationContext(),"Turn: "+game.getDate() +" at "+ game.getTime() +" was deleted",Toast.LENGTH_SHORT).show();
-
+        CoolToast coolToast = new CoolToast(getApplicationContext());
+        coolToast.make("Turn: "+game.getDate() +" at "+ game.getTime() +" was deleted", CoolToast.DANGER);
     }
 
     @Override
