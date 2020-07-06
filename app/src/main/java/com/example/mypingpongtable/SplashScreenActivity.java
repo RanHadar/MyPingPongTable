@@ -18,7 +18,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 .withFullScreen()
                 .withTargetActivity(MainActivity.class)
                 .withSplashTimeOut(1000)
-                .withLogo(R.drawable.pingpong);
+                .withLogo(R.drawable.pingpong_player);
 
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);
