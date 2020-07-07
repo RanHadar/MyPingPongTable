@@ -468,26 +468,23 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     private void updateHeaderTimes() {
-        Date curDate = calendar.getTime();
-
+        Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
         String datetime = dateFormat.format(date.getTime());
-
-        selectedDate = Integer.parseInt(datetime);
-
-        int curTime;
+        int curDate = Integer.parseInt(datetime);
+        int curTime = calendar.get(Calendar.HOUR_OF_DAY) * Server.INTERVAL;
+        curTime += calendar.get(Calendar.MINUTE);
 
         String[] headerTimes = getResources().getStringArray(R.array.header_times);
 
         for (int i = 0; i < GAMES_PER_HOUR; i++) {
-            int gameTime = selectedHour + textTimeOffset(headerTexts[i].getId());
-            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue())); // @josh
+            int gameTime = selectedHour + textTimeOffset(i);
+            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
             headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-//            selectedDate  selectedHour
             if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime)) ) {
-                headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);;
+                headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
     }
@@ -659,20 +656,13 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
-    private int textTimeOffset(int TextViewId) {
-        switch (TextViewId) {
-            case R.id.center_expansion_text2:
-                return 15;
-
-            case R.id.center_expansion_text3:
-                return 30;
-
-            case R.id.center_expansion_text4:
-                return 45;
-
-            default:
-                return 0;
+    private int textTimeOffset(int i) {
+        int val = 0;
+        while (i > 0) {
+            val += 15;
+            i--;
         }
+        return val;
     }
 
     public void joinButtonHandler(View view) {
