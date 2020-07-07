@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -467,12 +468,27 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     private void updateHeaderTimes() {
+        Date curDate = calendar.getTime();
+
+        Date date = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datetime = dateFormat.format(date.getTime());
+
+        selectedDate = Integer.parseInt(datetime);
+
+        int curTime;
 
         String[] headerTimes = getResources().getStringArray(R.array.header_times);
 
         for (int i = 0; i < GAMES_PER_HOUR; i++) {
-            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
+            int gameTime = selectedHour + textTimeOffset(headerTexts[i].getId());
+            headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue())); // @josh
             headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+//            selectedDate  selectedHour
+            if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime)) ) {
+                headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);;
+            }
         }
     }
 
@@ -636,6 +652,22 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
             case R.id.join_button_left4:
             case R.id.join_button_right4:
+                return 45;
+
+            default:
+                return 0;
+        }
+    }
+
+    private int textTimeOffset(int TextViewId) {
+        switch (TextViewId) {
+            case R.id.center_expansion_text2:
+                return 15;
+
+            case R.id.center_expansion_text3:
+                return 30;
+
+            case R.id.center_expansion_text4:
                 return 45;
 
             default:
