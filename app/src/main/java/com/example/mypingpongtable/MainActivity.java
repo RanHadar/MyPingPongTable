@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -470,12 +471,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     private void updateHeaderTimes() {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datetime = dateFormat.format(date.getTime());
+        int curDate = Integer.parseInt(datetime);
+        int curTime = calendar.get(Calendar.HOUR_OF_DAY) * Server.INTERVAL;
+        curTime += calendar.get(Calendar.MINUTE);
 
         String[] headerTimes = getResources().getStringArray(R.array.header_times);
 
         for (int i = 0; i < GAMES_PER_HOUR; i++) {
+            int gameTime = selectedHour + textTimeOffset(i);
             headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
             headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
+            if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime)) ) {
+                headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            }
         }
     }
 
@@ -644,6 +657,15 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             default:
                 return 0;
         }
+    }
+
+    private int textTimeOffset(int i) {
+        int val = 0;
+        while (i > 0) {
+            val += 15;
+            i--;
+        }
+        return val;
     }
 
     public void joinButtonHandler(View view) {
