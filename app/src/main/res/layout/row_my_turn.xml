@@ -65,7 +65,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
                 android:foregroundTint="#00791515"
                 android:scaleX="1.2"
                 android:scaleY="1.2"

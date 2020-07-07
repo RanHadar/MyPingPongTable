@@ -36,6 +36,7 @@ import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.github.florent37.expansionpanel.viewgroup.ExpansionsViewGroupLinearLayout;
 import com.maxproj.calendarpicker.Builder;
 import com.maxproj.calendarpicker.Models.YearMonthDay;
+import com.ndroid.nadim.sahel.CoolToast;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -128,7 +129,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private void addToCalendar() {
         ArrayList<Game> games = server.getPlayerAgenda(username);
         if(games.size() == 0){
-            Toast.makeText(this,"you have no pending games",Toast.LENGTH_LONG).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make("you have no pending games", CoolToast.DANGER);
         }else{
             android.app.AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
             View v = getLayoutInflater().inflate(R.layout.choose_event_dialog, null);
@@ -235,7 +237,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             startActivityForResult(intent,1);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else {
-            Toast.makeText(this, "Your Games List is Empty!", Toast.LENGTH_SHORT).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make("Your Games List is Empty!", CoolToast.DANGER);
         }
     }
 
@@ -651,7 +654,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         int time = selectedHour + timeOffset(joinButton.getId());
         Game chosenGame = server.getGame(selectedDate, time);
         if (setAlarm(time) != 0) {
-            Toast.makeText(this, "This time has already past", Toast.LENGTH_SHORT).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make("This time has already past", CoolToast.DANGER);
             return;
         }
         if (chosenGame.addPlayer(username)) {
@@ -659,7 +663,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             joinButton.setText(username);
             joinButton.setTextColor(getResources().getColor(R.color.white));
             server.saveState();
-            Toast.makeText(this, getString(R.string.join_message), Toast.LENGTH_SHORT).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make(getString(R.string.join_message), CoolToast.DANGER);
 
         } else if (joinButton.getText().toString().equals(username)) {
             DrawableCompat.setTint(bg, getResources().getColor(R.color.com_maxproj_calendarpicker_Green));
@@ -669,7 +674,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
 
         } else {
-            Toast.makeText(this, getString(R.string.join_twice_message), Toast.LENGTH_SHORT).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make(getString(R.string.join_twice_message), CoolToast.DANGER);
         }
         updateHeaderIcons();
         savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
@@ -707,7 +713,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         if (username.length() == 0) {
             tx.getBackground().setTint(Color.RED);
         } else if (username.length() > MAX_USERNAME_LEN) {
-            Toast.makeText(this, getString(R.string.name_too_long_message), Toast.LENGTH_SHORT).show();
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make(getString(R.string.name_too_long_message), CoolToast.DANGER);
         } else {
             nameDialog.dismiss();
             username = username.toLowerCase();
@@ -789,4 +796,3 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 }
-
