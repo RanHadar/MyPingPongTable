@@ -45,4 +45,6 @@
         <item>22:00</item>
         <item>23:00</item>
     </string-array>
+
+    <string name="title_activity_hall_of_fame">HallOfFameActivity</string>
 </resources>
