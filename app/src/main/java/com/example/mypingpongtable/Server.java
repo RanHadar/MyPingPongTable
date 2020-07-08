@@ -55,7 +55,7 @@ class Server implements java.io.Serializable{
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 server = (Server) in.readObject();                                                      // Reads the server state from a file we saved earlier to go on from the same state we were in (if we saved one earlier - otherwise it will create a new one)
                 server.refreshGames();                                                                  // Sets us to be the server for all the games in the list: game_list
-                in.close();object serialization
+                in.close();
                 fileIn.close();
             } catch (IOException i) {
                 i.printStackTrace();
