@@ -736,7 +736,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         } else if (username.length() > MAX_USERNAME_LEN) {
             CoolToast coolToast = new CoolToast(MainActivity.this);
             coolToast.make(getString(R.string.name_too_long_message), CoolToast.DANGER);
-        } else {
+        } else if (username.trim().length() == 0) {
+            CoolToast coolToast = new CoolToast(MainActivity.this);
+            coolToast.make(getString(R.string.name_with_only_whitespaces), CoolToast.DANGER);
+        }else {
             nameDialog.dismiss();
             username = username.toLowerCase();
             username = username.substring(0, 1).toUpperCase() + username.substring(1);

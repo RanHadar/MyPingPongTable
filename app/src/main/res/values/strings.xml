@@ -12,6 +12,7 @@
     <string name="name_too_long_message">Sorry. Pick a nickname shorter than 10 characters</string>
     <string name="username">username</string>
     <string name="copyright">Animation by Feitosa in Motion</string>
+    <string name="name_with_only_whitespaces">Sorry. Nickname cannot consist of only whitespaces</string>
     <string-array name="header_times">
         <item>%d:00</item>
         <item>%d:15</item>
