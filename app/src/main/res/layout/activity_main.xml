@@ -14,6 +14,44 @@
         android:layout_height="match_parent"
         android:layout_weight="3">
 
+
+        <LinearLayout
+            android:id="@+id/hall_of_fame_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#3F51B5"
+                    android:onClick="goToHallOfFame"
+                    android:src="@drawable/trophy"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+
+                    android:text="Hall Of Fame"
+                    android:textAllCaps="false" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hall Of Fame"
+                android:textSize="13sp"
+                android:layout_gravity="start"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FCFCFC"
+                />
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/welcomePlayerTxt"
             android:layout_width="match_parent"
@@ -44,24 +82,25 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-               >
+                android:layout_height="wrap_content">
+
                 <Button
                     android:id="@+id/savedTurnBtn"
-                    android:padding="5dp"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/two_racket_icon"
-                    android:gravity="center"
                     android:backgroundTint="@color/white"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:onClick="moveToMyTurnsActivity" />
+                    android:gravity="center"
+                    android:onClick="moveToMyTurnsActivity"
+                    android:padding="5dp" />
+
                 <TextView
                     android:id="@+id/savedTurnText"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/badge_circle"
                     android:layout_toEndOf="@id/savedTurnBtn"
+                    android:background="@drawable/badge_circle"
                     android:gravity="center"
                     android:text="10"
                     android:textAlignment="center"
@@ -75,12 +114,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Games"
-                android:textSize="13sp"
                 android:layout_gravity="start"
                 android:fontFamily="sans-serif-light"
+                android:text="My Games"
                 android:textColor="#FCFCFC"
-                />
+                android:textSize="13sp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -118,11 +156,11 @@
                     android:id="@+id/slot_header_1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="-10dp"
                     android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
-                    android:layout_marginHorizontal="10dp"
                     app:expansion_headerIndicator="@id/headerIndicator1"
                     app:expansion_layout="@id/expansionLayout1">
 
@@ -141,8 +179,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/racket_icon1"
@@ -158,9 +196,9 @@
                 <com.github.florent37.expansionpanel.ExpansionLayout
                     android:id="@+id/expansionLayout1"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="10dp"
-
                     android:layout_height="100dp"
+
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/expansion_bg">
 
@@ -181,8 +219,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/center_expansion_text1"
@@ -191,8 +228,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
                             android:text="@string/vs_text"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/join_button_right1"
@@ -206,9 +242,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
-
+                            android:textSize="12sp" />
 
 
                     </RelativeLayout>
@@ -220,11 +254,11 @@
                     android:id="@+id/slot_header_2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="-10dp"
                     android:background="@drawable/header_bg"
                     android:elevation="3dp"
                     android:textSize="16sp"
-                    android:layout_marginHorizontal="10dp"
 
                     app:expansion_headerIndicator="@id/headerIndicator2"
                     app:expansion_layout="@id/expansionLayout2">
@@ -244,9 +278,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimary" />
-
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
 
                     <ImageView
@@ -264,9 +297,9 @@
                 <com.github.florent37.expansionpanel.ExpansionLayout
                     android:id="@+id/expansionLayout2"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="10dp"
-
                     android:layout_height="100dp"
+
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/expansion_bg">
 
@@ -287,8 +320,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/center_expansion_text2"
@@ -297,8 +329,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
                             android:text="@string/vs_text"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/join_button_right2"
@@ -313,8 +344,7 @@
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
 
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
 
@@ -323,9 +353,9 @@
                 <com.github.florent37.expansionpanel.ExpansionHeader
                     android:id="@+id/slot_header_3"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="10dp"
-
                     android:layout_height="60dp"
+
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="-10dp"
                     android:background="@drawable/header_bg"
                     android:elevation="3dp"
@@ -348,8 +378,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
 
                     <ImageView
@@ -389,8 +419,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/center_expansion_text3"
@@ -399,8 +428,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30dp"
                             android:text="@string/vs_text"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/join_button_right3"
@@ -414,8 +442,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
                 </com.github.florent37.expansionpanel.ExpansionLayout>
@@ -425,10 +452,10 @@
                     android:id="@+id/slot_header_4"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="-10dp"
                     android:background="@drawable/header_bg"
                     android:elevation="3dp"
-                    android:layout_marginHorizontal="10dp"
                     android:textSize="16sp"
                     app:expansion_headerIndicator="@id/headerIndicator4"
                     app:expansion_layout="@id/expansionLayout4">
@@ -448,8 +475,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
 
                     <ImageView
@@ -466,8 +493,8 @@
                     android:id="@+id/expansionLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="20dp"
 
                     android:background="@drawable/expansion_bg">
 
@@ -488,8 +515,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/center_expansion_text4"
@@ -498,8 +524,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="32dp"
                             android:text="@string/vs_text"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <Button
                             android:id="@+id/join_button_right4"
@@ -514,8 +539,7 @@
                             android:onClick="joinButtonHandler"
                             android:text="@string/join_button_init_text"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
                 </com.github.florent37.expansionpanel.ExpansionLayout>
@@ -534,8 +558,7 @@
                 android:onClick="selectDate"
                 android:text="@string/date_button_init_text"
                 android:textAlignment="center"
-                android:textColor="@color/white"
-                />
+                android:textColor="@color/white" />
 
             <ImageView
                 android:layout_width="60dp"
@@ -551,11 +574,11 @@
                 android:id="@+id/pickTurnTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-medium"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="20dp"
                 android:text="@string/pick_turn_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="#FFFFFF"
@@ -587,18 +610,17 @@
                 android:id="@+id/addToCalendatBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textSize="10sp"
-                android:text="Add to calendar"
-                android:textColor="#FFFFFF"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Add to calendar"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
 
         </RelativeLayout>
 

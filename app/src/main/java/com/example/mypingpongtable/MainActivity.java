@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private TextView welcomePlayerTxt;
     private NameDialog nameDialog;
     private Button dateButton;
-    private  int currentGamePos = 0;
+    private int currentGamePos = 0;
 //    private Button myTurnsBtn;
 
     float x1, x2;
@@ -129,10 +129,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     private void addToCalendar() {
         ArrayList<Game> games = server.getPlayerAgenda(username);
-        if(games.size() == 0){
+        if (games.size() == 0) {
             CoolToast coolToast = new CoolToast(MainActivity.this);
             coolToast.make("you have no pending games", CoolToast.DANGER);
-        }else{
+        } else {
             android.app.AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
             View v = getLayoutInflater().inflate(R.layout.choose_event_dialog, null);
             dialogBuilder.setView(v);
@@ -153,26 +153,26 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         final TextView dateTextView = v.findViewById(R.id.dateTextView);
         final TextView hourTextView = v.findViewById(R.id.hourTextView);
         Game game = games.get(currentGamePos);
-        dateTextView.setText("Date: "+game.getDateString());
-        hourTextView.setText("Hour: "+game.getTimeString());
+        dateTextView.setText("Date: " + game.getDateString());
+        hourTextView.setText("Hour: " + game.getTimeString());
 
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentGamePos = (currentGamePos-1) % games.size();
+                currentGamePos = (currentGamePos - 1) % games.size();
                 Game game = games.get(currentGamePos);
-                dateTextView.setText("Date: "+game.getDateString());
-                hourTextView.setText("Hour: "+game.getTimeString());
+                dateTextView.setText("Date: " + game.getDateString());
+                hourTextView.setText("Hour: " + game.getTimeString());
             }
         });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentGamePos = (currentGamePos+1) % games.size();
+                currentGamePos = (currentGamePos + 1) % games.size();
                 Game game = games.get(currentGamePos);
-                dateTextView.setText("Date: "+game.getDateString());
-                hourTextView.setText("Hour: "+game.getTimeString());
+                dateTextView.setText("Date: " + game.getDateString());
+                hourTextView.setText("Hour: " + game.getTimeString());
             }
         });
 
@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 intent.putExtra("beginTime", game.getTime());
                 intent.putExtra("allDay", false);
                 intent.putExtra("rrule", "FREQ=YEARLY");
-                intent.putExtra("endTime", game.getTime()+60*60*1000);
-                if((game.getPlayer1() == null || game.getPlayer1().equals("")) ||
+                intent.putExtra("endTime", game.getTime() + 60 * 60 * 1000);
+                if ((game.getPlayer1() == null || game.getPlayer1().equals("")) ||
                         (game.getPlayer2() == null || game.getPlayer2().equals("")))
                     intent.putExtra("title", username + " plays ping-pong against unknown");
                 else
@@ -210,14 +210,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1) {
+        if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 this.deletedGames = (ArrayList<Game>) data.getSerializableExtra("deletedGames");
                 if (this.deletedGames != null) {
                     for (Game game : deletedGames) {
                         int date = game.getDate();
                         int time = game.getTime();
-                        server.removePlayer(date,time,username);
+                        server.removePlayer(date, time, username);
                         savedTurnsText.setText(String.valueOf(server.getPlayerAgenda(username).size()));
                     }
                 }
@@ -228,14 +228,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     public void moveToMyTurnsActivity(View view) {
-        if(!server.getPlayerAgenda(username).isEmpty()){
+        if (!server.getPlayerAgenda(username).isEmpty()) {
             Intent intent = new Intent(getApplicationContext(), MyTurnsActivity.class);
             intent.putExtra("username", this.username);
             intent.putExtra("game_list", server.getPlayerAgenda(username));
-            for (int i=0; i<4;i++){
+            for (int i = 0; i < 4; i++) {
                 slotExpansions[i].collapse(true);
             }
-            startActivityForResult(intent,1);
+            startActivityForResult(intent, 1);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else {
             CoolToast coolToast = new CoolToast(MainActivity.this);
@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             int gameTime = selectedHour + textTimeOffset(i);
             headerTexts[i].setText(String.format(headerTimes[i], hourPicker.getValue()));
             headerTexts[i].setTypeface(Typeface.DEFAULT_BOLD);
-            if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime)) ) {
+            if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime))) {
                 headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
@@ -721,10 +721,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         Intent myIntent = new Intent(getBaseContext(), AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 0, myIntent, 0);
 
-        manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), pendingIntent);
+        manager.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
         return 0;
     }
-
 
 
     public void confirmName(View view) {
@@ -810,11 +809,15 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     @Override
     public void applyOverrideConfiguration(Configuration overrideConfiguration) {
-        try{
+        try {
             super.applyOverrideConfiguration(overrideConfiguration);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Log.e("Main Activity", "Fail to applyOverrideConfiguration");
         }
+    }
+
+    public void goToHallOfFame(View view) {
+        Intent intent = new Intent(MainActivity.this, HallOfFameActivity.class);
+        startActivity(intent);
     }
 }
