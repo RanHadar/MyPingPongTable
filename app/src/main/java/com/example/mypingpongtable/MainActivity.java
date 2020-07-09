@@ -489,6 +489,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             if ((selectedDate < curDate) || ((selectedDate == curDate) && (gameTime < curTime))) {
                 headerTexts[i].setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             }
+            else {
+                headerTexts[i].setPaintFlags(headerTexts[i].getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+            }
         }
     }
 

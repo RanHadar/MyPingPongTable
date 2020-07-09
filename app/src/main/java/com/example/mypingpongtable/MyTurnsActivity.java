@@ -114,7 +114,7 @@ public class MyTurnsActivity extends AppCompatActivity implements Serializable {
         Game game = gameList.get(position);
         deletedGameList.add(game);
         gameList.remove(position);
-        CoolToast coolToast = new CoolToast(getApplicationContext());
+        CoolToast coolToast = new CoolToast(MyTurnsActivity.this);
         coolToast.make("Turn: "+game.getDate() +" at "+ game.getTime() +" was deleted", CoolToast.DANGER);
     }
 
